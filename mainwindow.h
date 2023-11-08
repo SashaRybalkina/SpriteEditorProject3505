@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "Sliders.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,5 +18,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    void styleSetup();
+    void colorRangeSetup();
 };
+
 #endif // MAINWINDOW_H

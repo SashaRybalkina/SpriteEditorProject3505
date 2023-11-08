@@ -24,148 +24,184 @@
      </rect>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider">
+   <widget class="QSlider" name="redSlider">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>340</y>
-      <width>160</width>
-      <height>16</height>
+      <x>10</x>
+      <y>130</y>
+      <width>141</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider_2">
+   <widget class="QSlider" name="greenSlider">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>340</y>
-      <width>160</width>
-      <height>16</height>
+      <x>10</x>
+      <y>200</y>
+      <width>141</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider_3">
+   <widget class="QSlider" name="blueSlider">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>340</y>
-      <width>160</width>
-      <height>16</height>
+      <x>10</x>
+      <y>270</y>
+      <width>141</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider_4">
+   <widget class="QSlider" name="opacitySlider">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>10</x>
       <y>340</y>
-      <width>160</width>
-      <height>16</height>
+      <width>141</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="redLabel">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>310</y>
+      <x>10</x>
+      <y>110</y>
       <width>49</width>
       <height>16</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
-     <string>Red</string>
+     <string>Red:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="greenLabel">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>310</y>
+      <x>10</x>
+      <y>180</y>
       <width>49</width>
       <height>16</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
-     <string>Green</string>
+     <string>Green:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="blueLabel">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>310</y>
+      <x>10</x>
+      <y>250</y>
       <width>49</width>
       <height>16</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
-     <string>Blue</string>
+     <string>Blue:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="opacityLabel">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>310</y>
-      <width>49</width>
+      <x>10</x>
+      <y>320</y>
+      <width>71</width>
       <height>16</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
-     <string>Opacity</string>
+     <string>Opacity:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="redInput">
     <property name="geometry">
      <rect>
-      <x>132</x>
-      <y>310</y>
-      <width>61</width>
+      <x>100</x>
+      <y>110</y>
+      <width>41</width>
       <height>24</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="greenInput">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>310</y>
-      <width>61</width>
+      <x>100</x>
+      <y>180</y>
+      <width>41</width>
       <height>24</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="blueInput">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>310</y>
-      <width>61</width>
+      <x>100</x>
+      <y>250</y>
+      <width>41</width>
       <height>24</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="opacityInput">
     <property name="geometry">
      <rect>
-      <x>680</x>
-      <y>310</y>
-      <width>61</width>
+      <x>100</x>
+      <y>320</y>
+      <width>41</width>
       <height>24</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
     </property>
    </widget>
   </widget>
@@ -175,7 +211,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>
