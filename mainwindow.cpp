@@ -22,10 +22,13 @@ MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(par
     connect(ui -> blueInput, &QLineEdit::textEdited, sliders, &Sliders::setBlueSlider);
     connect(ui -> opacityInput, &QLineEdit::textEdited, sliders, &Sliders::setOpacitySlider);
 
+    // connects UI to model for adding Sprite Frames
     connect(ui -> AddButton, &QPushButton::clicked, &frameModel, &FrameModel::addFrame);
+    // Connects UI to model for deleting Sprite Frames
     connect(ui -> DeleteButton, &QPushButton::clicked, &frameModel, &FrameModel::deleteFrame);
-
+    // Connects UI to model for moving forward through Sprite Frames
     connect(ui -> forwardButton, &QPushButton::clicked, &frameModel, &FrameModel::nextFrame);
+    // Connects UI to model for moving backward through Sprite Frames
     connect(ui -> backwardButton, &QPushButton::clicked, &frameModel, &FrameModel::priorFrame);
 
 }

@@ -10,12 +10,14 @@ void FrameModel::attachStackWidget(QStackedWidget* frameStackWidget) {
     this->add_image();
 }
 
+// method
 void FrameModel::add_image() {
     Frame* frame = new Frame();
     frameStack->addWidget(frame);
     qDebug() << frameStack->count();
 }
 
+// slot
 void FrameModel::addFrame() {
     this->add_image();
 }
