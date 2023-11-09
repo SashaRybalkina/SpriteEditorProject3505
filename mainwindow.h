@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "Sliders.h"
+#include "FrameModel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -13,7 +14,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(FrameModel& frameModel, QWidget *parent = nullptr);
     ~MainWindow();
 
 private:

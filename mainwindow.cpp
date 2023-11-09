@@ -1,11 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Sliders.h"
+#include "FrameModel.h"
 
-MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     Sliders* sliders = new Sliders(ui);
+    frameModel.attachStackWidget(ui -> FrameStack);
 
     styleSetup();
     colorRangeSetup();
@@ -56,4 +58,5 @@ void MainWindow::colorRangeSetup()
     ui -> greenSlider -> setRange(0, 255);
     ui -> blueSlider -> setRange(0, 255);
     ui -> opacitySlider -> setRange(0, 1000);
+    // ui -> redSlider -> get
 }

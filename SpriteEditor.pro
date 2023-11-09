@@ -10,11 +10,15 @@ CONFIG += c++17
 
 SOURCES += \
     Sliders.cpp \
+    frame.cpp \
+    framemodel.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     Sliders.h \
+    frame.h \
+    framemodel.h \
     mainwindow.h
 
 FORMS += \
