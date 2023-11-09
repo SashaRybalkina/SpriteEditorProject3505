@@ -14,6 +14,10 @@ public:
     void add_image();
 
 public slots:
+    void addFrame();
+    void deleteFrame();
+    void nextFrame();
+    void priorFrame();
 
 signals:
 

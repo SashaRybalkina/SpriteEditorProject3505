@@ -21,6 +21,13 @@ MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(par
     connect(ui -> greenInput, &QLineEdit::textEdited, sliders, &Sliders::setGreenSlider);
     connect(ui -> blueInput, &QLineEdit::textEdited, sliders, &Sliders::setBlueSlider);
     connect(ui -> opacityInput, &QLineEdit::textEdited, sliders, &Sliders::setOpacitySlider);
+
+    connect(ui -> AddButton, &QPushButton::clicked, &frameModel, &FrameModel::addFrame);
+    connect(ui -> DeleteButton, &QPushButton::clicked, &frameModel, &FrameModel::deleteFrame);
+
+    connect(ui -> forwardButton, &QPushButton::clicked, &frameModel, &FrameModel::nextFrame);
+    connect(ui -> backwardButton, &QPushButton::clicked, &frameModel, &FrameModel::priorFrame);
+
 }
 
 MainWindow::~MainWindow()

@@ -20,8 +20,6 @@ public:
     // int penWidth() const { return myPenWidth; }
 
 public slots:
-    //void clearImage();
-    //void print();
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
