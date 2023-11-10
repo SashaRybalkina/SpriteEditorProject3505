@@ -42,12 +42,22 @@ public slots:
      * @brief priorFrame move to prior frame cyclic
      */
     void priorFrame();
+    /**
+     * @brief sizeChanged gets new size of frames. Warns user drawings will be reset and then changes frame size.
+     */
+    void sizeChanged(QString size);
 
 signals:
+    /**
+     * @brief changeSizeComboBox sends signal to change size
+     * @param size
+     */
+    void changeSizeComboBox(QString size);
 
 private:
     QList<Frame*> images;
     QStackedWidget* frameStack;
+    int size;
 };
 
 #endif // FRAMEMODEL_H

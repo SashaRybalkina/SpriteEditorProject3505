@@ -14,16 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QSpinBox" name="spinBox">
-    <property name="geometry">
-     <rect>
-      <x>260</x>
-      <y>10</y>
-      <width>42</width>
-      <height>25</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QSlider" name="redSlider">
     <property name="geometry">
      <rect>
@@ -274,6 +264,51 @@
     <property name="text">
      <string>back</string>
     </property>
+   </widget>
+   <widget class="QComboBox" name="sizeComboBox">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>40</y>
+      <width>72</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>8</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>16</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>32</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>64</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>128</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>256</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

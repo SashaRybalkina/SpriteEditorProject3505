@@ -31,6 +31,10 @@ MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(par
     // Connects UI to model for moving backward through Sprite Frames
     connect(ui -> backwardButton, &QPushButton::clicked, &frameModel, &FrameModel::priorFrame);
 
+    // Connects UI to model for updating frame size
+    connect(ui -> sizeComboBox, &QComboBox::currentTextChanged, &frameModel, &FrameModel::sizeChanged);
+    // Connect model to UI for changing back frame size if user picks no during warning
+    connect(&frameModel, &FrameModel::changeSizeComboBox, ui -> sizeComboBox, &QComboBox::setCurrentText);
 }
 
 MainWindow::~MainWindow()

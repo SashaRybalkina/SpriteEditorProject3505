@@ -1,7 +1,9 @@
 #include "framemodel.h"
 #include "frame.h"
+#include <QMessageBox>
+#include <QString>
 
-FrameModel::FrameModel(QObject *parent) : QObject(parent) {
+FrameModel::FrameModel(QObject *parent) : QObject(parent), size(4) {
 }
 
 void FrameModel::attachStackWidget(QStackedWidget* frameStackWidget) {
@@ -12,7 +14,7 @@ void FrameModel::attachStackWidget(QStackedWidget* frameStackWidget) {
 
 // method
 void FrameModel::add_image() {
-    Frame* frame = new Frame();
+    Frame* frame = new Frame(this->size);
     frameStack->addWidget(frame);
     qDebug() << frameStack->count();
 }
@@ -52,3 +54,38 @@ void FrameModel::priorFrame() {
     int nextIndex = (currentIndex - 1) % frameStack->count();
     frameStack->setCurrentIndex(nextIndex);
 }
+
+void FrameModel::sizeChanged(QString size_) {
+//    // choose first and second reminder
+//    QString replyText("");
+//    if(this->size == size_.toInt()) {
+//        replyText = "Are you sure?";
+//    }
+//    else {
+//        replyText = "If you proceed progress will be delted and size will be adjusted. Would you like to proceed?";
+//    }
+    // generate popup for reminder
+//    QMessageBox::StandardButton reply = QMessageBox::question(nullptr, "Changing Frame Size Warning", replyText,
+//                                                              QMessageBox::Yes|QMessageBox::No);
+
+//    if (reply == QMessageBox::Yes) {
+        this->size = size_.toInt();
+        // create new empty frame of size
+        this->addFrame();
+        // remove all prior frames
+        while (frameStack->count() > 1) {
+            QWidget *widget = frameStack->widget(0); // Get the first widget
+            frameStack->removeWidget(widget); // Remove the widget from the stack
+            delete widget; // Delete the widget
+        }
+//    }
+//    else {
+//        qDebug("ran2");
+//        // changeSizeComboBox(QString::number(this->size));
+//    }
+}
+
+
+
+
+

@@ -2,8 +2,8 @@
 #include <QImage>
 #include <QPainter>
 
-Frame::Frame(QWidget *parent, int size)
-    : QWidget(parent)
+Frame::Frame(int size)
+    : QWidget(nullptr)
 {
     qDebug("Frame created");
 

@@ -14,7 +14,7 @@ public:
      * @param parent widgets parent
      * @param size pixel dimension for underlying image
      */
-    Frame(QWidget *parent = nullptr, int size = 10);
+    Frame(int size = 4);
 
     /**
      * @brief createImage creates a frame default filled in
