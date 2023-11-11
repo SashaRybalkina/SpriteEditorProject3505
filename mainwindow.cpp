@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include "Sliders.h"
 #include "FrameModel.h"
+#include "ui_framepreview.h"
+
 
 MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {

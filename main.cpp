@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "framemodel.h"
-
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -10,5 +9,6 @@ int main(int argc, char *argv[])
     FrameModel frameModel;
     MainWindow w(frameModel);
     w.show();
+
     return a.exec();
 }
