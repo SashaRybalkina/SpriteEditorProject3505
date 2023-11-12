@@ -22,9 +22,9 @@ public:
     ~FramePreview();
 
 public slots:
-    void togglePlayPause();
-    void changeFPS(int fps);
-    void toggleActualSize();
+    //void togglePlayPause();
+    //void changeFPS(int fps);
+    //void toggleActualSize();
 
 private:
     Ui::FramePreview *ui;
