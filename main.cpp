@@ -7,7 +7,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     //Sliders sliders;
     FrameModel frameModel;
-    MainWindow w(frameModel);
+    Frame frame;
+    MainWindow w(frameModel, frame);
     w.show();
 
     return a.exec();

@@ -34,6 +34,8 @@ public:
     // int penWidth() const { return myPenWidth; }
 
 public slots:
+    void saveFile();
+    void openFile();
 
 protected:
     /**
@@ -69,6 +71,7 @@ private:
     QImage image;
     // QPoint lastPoint;
     int image_size;
+    QString fileName;
 };
 
 #endif // FRAME_H
