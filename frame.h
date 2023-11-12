@@ -33,6 +33,8 @@ public:
     QColor penColor() const { return myPenColor; }
     // int penWidth() const { return myPenWidth; }
 
+    QImage getImage() const { return image; }
+
 public slots:
     void saveFile();
     void openFile();

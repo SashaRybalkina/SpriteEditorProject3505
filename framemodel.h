@@ -24,6 +24,9 @@ public:
      */
     void add_image();
 
+
+    QImage getImageAt(int index);
+
 public slots:
     /**
      * @brief addFrame calls add_image to add new Sprite frame

@@ -19,6 +19,14 @@ void FrameModel::add_image() {
     qDebug() << frameStack->count();
 }
 
+QImage FrameModel::getImageAt(int index) {
+    if (index >= 0 && index < images.size()) {
+        return images[index]->getImage();
+    }
+    return QImage();
+}
+
+
 // slot
 void FrameModel::addFrame() {
     this->add_image();
