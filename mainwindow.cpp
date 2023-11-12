@@ -5,7 +5,7 @@
 #include "ui_framepreview.h"
 
 
-MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(FrameModel& frameModel, Frame& frame, QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     Sliders* sliders = new Sliders(ui);
@@ -37,6 +37,9 @@ MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(par
     connect(ui -> sizeComboBox, &QComboBox::currentTextChanged, &frameModel, &FrameModel::sizeChanged);
     // Connect model to UI for changing back frame size if user picks no during warning
     connect(&frameModel, &FrameModel::changeSizeComboBox, ui -> sizeComboBox, &QComboBox::setCurrentText);
+
+    connect(ui -> actionSave, &QAction::triggered, &frame, &Frame::saveFile);
+    connect(ui -> actionOpen, &QAction::triggered, &frame, &Frame::openFile);
 }
 
 MainWindow::~MainWindow()
@@ -74,5 +77,4 @@ void MainWindow::colorRangeSetup()
     ui -> greenSlider -> setRange(0, 255);
     ui -> blueSlider -> setRange(0, 255);
     ui -> opacitySlider -> setRange(0, 1000);
-    // ui -> redSlider -> get
 }

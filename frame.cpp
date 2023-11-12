@@ -1,6 +1,12 @@
 #include "frame.h"
+#include <iostream>
+#include <QFile>
 #include <QImage>
 #include <QPainter>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QFileDialog>
 
 Frame::Frame(int size)
     : QWidget(nullptr)
@@ -70,3 +76,74 @@ void Frame::fill(const QPoint &point) {
     update(); //this->paint();
 }
 
+void Frame::saveFile()
+{
+    if (fileName.isEmpty())
+    {
+        QStringList selectedFiles = QFileDialog::getOpenFileNames(this, tr("Open File"),"/path/to/file/",tr("JSON Files (*.ssp)"));
+        fileName = selectedFiles.at(0);
+    }
+
+    QJsonObject content;
+    QString str;
+    int index = 1;
+    for (int y = 0; y < image.height(); y++) {
+        for (int x = 0; x < image.width(); x++) {
+            QJsonObject pixel;
+            QColor currentColor(image.pixel(x, y));
+            pixel.insert("a", currentColor.alpha());
+            pixel.insert("b", currentColor.blue());
+            pixel.insert("g", currentColor.green());
+            pixel.insert("r", currentColor.red());
+            pixel.insert("y", y);
+            pixel.insert("x", x);
+            content.insert("Pixel " + str.setNum(index), pixel);
+            index++;
+        }
+    }
+
+    QJsonDocument document(content);
+    QFile file(fileName);
+    if(file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
+    {
+        file.write(document.toJson());
+    }
+    else
+    {
+        std::cout << "file open failed" << std::endl;
+    }
+    file.close();
+}
+
+void Frame::openFile()
+{
+    QStringList selectedFiles = QFileDialog::getOpenFileNames(this, tr("Open File"), "/path/to/file/", tr("JSON Files (*.ssp)"));
+    QFile file(selectedFiles.at(0));
+    if(file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray valuesArray = file.readAll();
+        file.close();
+        QJsonDocument valuesDocument(QJsonDocument::fromJson(valuesArray));
+        QJsonObject json = valuesDocument.object();
+        foreach(const QString& pixelKey, json.keys())
+        {
+            QStringList pixelValues;
+            QJsonObject pixelValue = json.value(pixelKey).toObject();
+            foreach(const QString& pixelValueKey, pixelValue.keys())
+            {
+                std::cout << pixelValueKey.toStdString() << std::endl;
+                std::cout << pixelValue.value(pixelValueKey).toString().toStdString() << std::endl;
+                pixelValues.push_back(pixelValue.value(pixelValueKey).toString());
+            }
+            std::cout << pixelValues[4].toStdString() << std::endl;
+            int x = pixelValues[4].toInt();
+            int y = pixelValues[5].toInt();
+            int red = pixelValues[3].toInt();
+            int green = pixelValues[2].toInt();
+            int blue = pixelValues[1].toInt();
+            int alpha = pixelValues[0].toInt();
+            QRgba64 color = qRgba64(red, green, blue, alpha);
+            image.setPixel(x, y, color);
+        }
+    }
+}
