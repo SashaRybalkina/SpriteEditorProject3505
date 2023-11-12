@@ -12,6 +12,7 @@ SOURCES += \
     Sliders.cpp \
     frame.cpp \
     framemodel.cpp \
+    framepreview.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -19,9 +20,11 @@ HEADERS += \
     Sliders.h \
     frame.h \
     framemodel.h \
+    framepreview.h \
     mainwindow.h
 
 FORMS += \
+    framepreview.ui \
     mainwindow.ui
 
 # Default rules for deployment.
