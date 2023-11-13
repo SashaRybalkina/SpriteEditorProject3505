@@ -44,6 +44,8 @@ MainWindow::MainWindow(FrameModel& frameModel, Frame& frame, QWidget *parent): Q
 
     connect(ui -> actionSave, &QAction::triggered, &frame, &Frame::saveFile);
     connect(ui -> actionOpen, &QAction::triggered, &frame, &Frame::openFile);
+
+    connect(&frame, &Frame::setSize, ui -> sizeComboBox, &QComboBox::setCurrentText);
 }
 
 MainWindow::~MainWindow()

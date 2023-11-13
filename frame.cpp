@@ -4,6 +4,7 @@
 #include <QImage>
 #include <QPainter>
 #include <QJsonDocument>
+#include <QJsonValue>
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QFileDialog>
@@ -85,6 +86,7 @@ void Frame::saveFile()
     }
 
     QJsonObject content;
+    content.insert("Image Size", image_size);
     QString str;
     int index = 1;
     for (int y = 0; y < image.height(); y++) {
@@ -101,7 +103,6 @@ void Frame::saveFile()
             index++;
         }
     }
-
     QJsonDocument document(content);
     QFile file(fileName);
     if(file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
@@ -119,31 +120,36 @@ void Frame::openFile()
 {
     QStringList selectedFiles = QFileDialog::getOpenFileNames(this, tr("Open File"), "/path/to/file/", tr("JSON Files (*.ssp)"));
     QFile file(selectedFiles.at(0));
+    QString str;
     if(file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QByteArray valuesArray = file.readAll();
         file.close();
         QJsonDocument valuesDocument(QJsonDocument::fromJson(valuesArray));
         QJsonObject json = valuesDocument.object();
-        foreach(const QString& pixelKey, json.keys())
+        foreach(const QString& jsonObject, json.keys())
         {
-            QStringList pixelValues;
-            QJsonObject pixelValue = json.value(pixelKey).toObject();
-            foreach(const QString& pixelValueKey, pixelValue.keys())
+            if (jsonObject == "Image Size")
             {
-                std::cout << pixelValueKey.toStdString() << std::endl;
-                std::cout << pixelValue.value(pixelValueKey).toString().toStdString() << std::endl;
-                pixelValues.push_back(pixelValue.value(pixelValueKey).toString());
+                emit setSize(str.setNum(json.value(jsonObject).toInt()));
             }
-            std::cout << pixelValues[4].toStdString() << std::endl;
-            int x = pixelValues[4].toInt();
-            int y = pixelValues[5].toInt();
-            int red = pixelValues[3].toInt();
-            int green = pixelValues[2].toInt();
-            int blue = pixelValues[1].toInt();
-            int alpha = pixelValues[0].toInt();
-            QRgba64 color = qRgba64(red, green, blue, alpha);
-            image.setPixel(x, y, color);
+            else
+            {
+                QStringList pixelValues;
+                QJsonObject pixelValue = json.value(jsonObject).toObject();
+                foreach(const QString& pixelValueKey, pixelValue.keys())
+                {
+                    pixelValues.push_back(str.setNum(pixelValue.value(pixelValueKey).toInt()));
+                }
+                int x = pixelValues[4].toInt();
+                int y = pixelValues[5].toInt();
+                int red = pixelValues[3].toInt();
+                int green = pixelValues[2].toInt();
+                int blue = pixelValues[1].toInt();
+                int alpha = pixelValues[0].toInt();
+                QRgba64 color = qRgba64(red, green, blue, alpha);
+                image.setPixel(x, y, color);
+            }
         }
     }
 }

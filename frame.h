@@ -39,6 +39,9 @@ public slots:
     void saveFile();
     void openFile();
 
+signals:
+    void setSize(QString size);
+
 protected:
     /**
      * @brief mousePressEvent adjusts the undelrying image with new color at the location pressed and paints it
