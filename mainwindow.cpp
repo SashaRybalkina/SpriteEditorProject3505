@@ -46,6 +46,9 @@ MainWindow::MainWindow(FrameModel& frameModel, Frame& frame, QWidget *parent): Q
     connect(ui -> actionOpen, &QAction::triggered, &frame, &Frame::openFile);
 
     connect(&frame, &Frame::setSize, ui -> sizeComboBox, &QComboBox::setCurrentText);
+
+    // Connects UI to model for updating background color for additonal frames
+    connect(ui -> backgroundComboBox, &QComboBox::currentTextChanged, &frameModel, &FrameModel::backgroundColorChanged);
 }
 
 MainWindow::~MainWindow()

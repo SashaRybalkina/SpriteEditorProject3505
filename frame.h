@@ -14,7 +14,7 @@ public:
      * @param parent widgets parent
      * @param size pixel dimension for underlying image
      */
-    Frame(int size = 4);
+    Frame(int size = 4, QColor backgroundColor = Qt::blue);
 
     /**
      * @brief createImage creates a frame default filled in
@@ -77,6 +77,7 @@ private:
     // QPoint lastPoint;
     int image_size;
     QString fileName;
+    QColor backgroundColor;
 };
 
 #endif // FRAME_H

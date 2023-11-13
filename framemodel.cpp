@@ -3,7 +3,7 @@
 #include <QMessageBox>
 #include <QString>
 
-FrameModel::FrameModel(QObject *parent) : QObject(parent), size(4) {
+FrameModel::FrameModel(QObject *parent) : QObject(parent), size(4), backgroundColor(Qt::blue) {
 }
 
 void FrameModel::attachStackWidget(QStackedWidget* frameStackWidget) {
@@ -14,7 +14,8 @@ void FrameModel::attachStackWidget(QStackedWidget* frameStackWidget) {
 
 // method
 void FrameModel::add_image() {
-    Frame* frame = new Frame(this->size);
+    qDebug() << backgroundColor;
+    Frame* frame = new Frame(this->size, backgroundColor);
     frameStack->addWidget(frame);
     qDebug() << frameStack->count();
 }
@@ -90,4 +91,8 @@ void FrameModel::sizeChanged(QString size_) {
     //        qDebug("ran2");
     //        // changeSizeComboBox(QString::number(this->size));
     //    }
+}
+
+void FrameModel::backgroundColorChanged(QString color) {
+    this->backgroundColor = QColor(color);
 }

@@ -9,19 +9,20 @@
 #include <QJsonArray>
 #include <QFileDialog>
 
-Frame::Frame(int size)
+Frame::Frame(int size, QColor backgroundColor)
     : QWidget(nullptr)
 {
     qDebug("Frame created");
 
     setAttribute(Qt::WA_StaticContents);
     this->image_size = size;
+    this->backgroundColor = backgroundColor;
     this->createImage();
 }
 
 void Frame::createImage() {
     image = QImage(image_size, image_size, QImage::Format_RGB32);
-    image.fill(myPenColor);
+    image.fill(backgroundColor);
     update();
     qDebug("Update Called");
     this->setPenColor(Qt::black);

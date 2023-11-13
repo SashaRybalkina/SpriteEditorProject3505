@@ -49,6 +49,11 @@ public slots:
      * @brief sizeChanged gets new size of frames. Warns user drawings will be reset and then changes frame size.
      */
     void sizeChanged(QString size);
+    /**
+     * @brief backgroundColorChanged gets new backgorund color and sets it
+     * @param color
+     */
+    void backgroundColorChanged(QString color);
 
 signals:
     /**
@@ -60,6 +65,7 @@ signals:
 private:
     QStackedWidget* frameStack;
     int size;
+    QColor backgroundColor;
 };
 
 #endif // FRAMEMODEL_H
