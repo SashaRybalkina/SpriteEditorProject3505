@@ -3,13 +3,17 @@
 #include "Sliders.h"
 #include "FrameModel.h"
 #include "ui_framepreview.h"
-
+#include <QHBoxLayout>
 
 MainWindow::MainWindow(FrameModel& frameModel, Frame& frame, QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     Sliders* sliders = new Sliders(ui);
+
     frameModel.attachStackWidget(ui -> FrameStack);
+//    ui -> widget -> populateFrameStackModel(ui->FrameStack, &frameModel);
+
+    framePreview = new FramePreview(ui->FrameStack, &frameModel, this);
 
     styleSetup();
     colorRangeSetup();
@@ -45,6 +49,7 @@ MainWindow::MainWindow(FrameModel& frameModel, Frame& frame, QWidget *parent): Q
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete framePreview;
 }
 
 void MainWindow::styleSetup()

@@ -20,12 +20,11 @@ void FrameModel::add_image() {
 }
 
 QImage FrameModel::getImageAt(int index) {
-    if (index >= 0 && index < images.size()) {
-        return images[index]->getImage();
+    if (index >= 0 && index < frameStack->count()) {
+        return qobject_cast<Frame*>(frameStack->widget(index))->getImage();
     }
     return QImage();
 }
-
 
 // slot
 void FrameModel::addFrame() {
@@ -92,8 +91,3 @@ void FrameModel::sizeChanged(QString size_) {
     //        // changeSizeComboBox(QString::number(this->size));
     //    }
 }
-
-
-
-
-

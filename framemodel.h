@@ -58,7 +58,6 @@ signals:
     void changeSizeComboBox(QString size);
 
 private:
-    QList<Frame*> images;
     QStackedWidget* frameStack;
     int size;
 };

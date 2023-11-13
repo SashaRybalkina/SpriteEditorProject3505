@@ -23,6 +23,8 @@ public:
     explicit FramePreview(QStackedWidget* frameStack, FrameModel* frameModel, QWidget *parent = nullptr);
     ~FramePreview();
 
+    void populateFrameStackModel(QStackedWidget* frameStack, FrameModel* frameModel);
+
 public slots:
     void togglePlayPause();
     void changeFPS(int fps);
@@ -34,7 +36,6 @@ private:
     QTimer timer;
     QStackedWidget* frameStack;
     QGraphicsScene* scene;
-    QImage currentFrame;
 
     int currentFrameIndex;
     int currentFPS = 12;

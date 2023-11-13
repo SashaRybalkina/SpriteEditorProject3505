@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "Sliders.h"
 #include "FrameModel.h"
+#include "framepreview.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,6 +20,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QStackedWidget* frameStack;
+    FramePreview *framePreview;
+
     void styleSetup();
     void colorRangeSetup();
 };
