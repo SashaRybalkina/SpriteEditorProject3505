@@ -135,5 +135,7 @@ void MainWindow::changeColorSliders(int red, int green, int blue, int alpha)
 
 void MainWindow::addPenClicked()
 {
-    ui -> toolListWidget -> addItem("Custom Pen");
+    QListWidgetItem* item = new QListWidgetItem("Custom Pen");
+    item->setFlags(Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+    ui -> toolListWidget -> addItem(item);
 }
