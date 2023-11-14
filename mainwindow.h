@@ -14,6 +14,9 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+private slots:
+    void showFramePreview();
+
 public:
     MainWindow(FrameModel& frameModel, Frame& frame, QWidget *parent = nullptr);
     ~MainWindow();

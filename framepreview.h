@@ -25,6 +25,9 @@ public:
 
     void populateFrameStackModel(QStackedWidget* frameStack, FrameModel* frameModel);
 
+private slots:
+    void hideFramePreview();
+
 public slots:
     void togglePlayPause();
     void changeFPS(int fps);

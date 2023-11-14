@@ -29,6 +29,8 @@ FramePreview::FramePreview(QStackedWidget* frameStack, FrameModel* frameModel, Q
     connect(fpsBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &FramePreview::changeFPS);
     connect(actualSizeBox, &QCheckBox::stateChanged, this, &FramePreview::toggleActualSize);
 
+    connect(ui -> hideButton, &QPushButton::clicked, this, &FramePreview::hideFramePreview);
+
     connect(&timer, &QTimer::timeout, this, &FramePreview::updateAnimation);
     timer.setInterval(1000 / currentFPS);
 
@@ -121,7 +123,12 @@ void FramePreview::updateCurrentFrame()
         scene->clear();
         scene->addPixmap(framePixmap);
     }
-//    qDebug() << "frame null";
-    //qDebug() << "frame updated";
+}
+
+void FramePreview::hideFramePreview()
+{
+    qDebug() << "hide called";
+
+    this->hide();
 }
 

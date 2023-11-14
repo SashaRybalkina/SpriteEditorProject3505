@@ -12,8 +12,8 @@ MainWindow::MainWindow(FrameModel& frameModel, Frame& frame, QWidget *parent): Q
 
     frameModel.attachStackWidget(ui -> FrameStack);
 //    ui -> widget -> populateFrameStackModel(ui->FrameStack, &frameModel);
-
-    framePreview = new FramePreview(ui->FrameStack, &frameModel, this);
+    connect(ui -> showButton, &QPushButton::clicked, this, &MainWindow::showFramePreview);
+//    framePreview = new FramePreview(ui->FrameStack, &frameModel, this);
 
     styleSetup();
     colorRangeSetup();
@@ -87,4 +87,11 @@ void MainWindow::colorRangeSetup()
     ui -> greenSlider -> setRange(0, 255);
     ui -> blueSlider -> setRange(0, 255);
     ui -> opacitySlider -> setRange(0, 1000);
+}
+
+void MainWindow::showFramePreview()
+{
+    qDebug() << "show called";
+
+    framePreview->show();
 }
