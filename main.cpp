@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     //Sliders sliders;
     FrameModel frameModel;
     Frame frame;
-    MainWindow w(frameModel, frame);
+    MainWindow w(frameModel);
     w.show();
 
     return a.exec();

@@ -18,7 +18,7 @@ private slots:
     void showFramePreview();
 
 public:
-    MainWindow(FrameModel& frameModel, Frame& frame, QWidget *parent = nullptr);
+    MainWindow(FrameModel& frameModel, QWidget *parent = nullptr);
     ~MainWindow();
 
 private:

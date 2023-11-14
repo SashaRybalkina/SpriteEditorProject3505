@@ -1,7 +1,16 @@
 #include "framemodel.h"
 #include "frame.h"
+#include <iostream>
 #include <QMessageBox>
 #include <QString>
+#include <QFile>
+#include <QImage>
+#include <QPainter>
+#include <QJsonDocument>
+#include <QJsonValue>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QFileDialog>
 
 FrameModel::FrameModel(QObject *parent) : QObject(parent), size(4), backgroundColor(Qt::blue) {
 }
@@ -95,4 +104,94 @@ void FrameModel::sizeChanged(QString size_) {
 
 void FrameModel::backgroundColorChanged(QString color) {
     this->backgroundColor = QColor(color);
+}
+
+void FrameModel::saveFile()
+{
+    if (fileName.isEmpty())
+    {
+        QStringList selectedFiles = QFileDialog::getOpenFileNames(new QWidget, tr("Open File"),"/path/to/file/",tr("JSON Files (*.ssp)"));
+        fileName = selectedFiles.at(0);
+    }
+
+    QJsonObject content;
+    content.insert("Image Size", size);
+    QString str;
+    for (int f = 0; f < frameStack->count(); f++) {
+        QJsonObject frame;
+        int index = 1;
+        for (int y = 0; y < dynamic_cast<Frame*>(frameStack->widget(f))->getImage().height(); y++) {
+            for (int x = 0; x < dynamic_cast<Frame*>(frameStack->widget(f))->getImage().width(); x++) {
+                QJsonObject pixel;
+                QColor currentColor(dynamic_cast<Frame*>(frameStack->widget(f))->getImage().pixel(x, y));
+                pixel.insert("a", currentColor.alpha());
+                pixel.insert("b", currentColor.blue());
+                pixel.insert("g", currentColor.green());
+                pixel.insert("r", currentColor.red());
+                pixel.insert("y", y);
+                pixel.insert("x", x);
+                frame.insert("Pixel " + str.setNum(index), pixel);
+                index++;
+            }
+        }
+        content.insert("Frame " + str.setNum(f + 1), frame);
+    }
+    QJsonDocument document(content);
+    QFile file(fileName);
+    if(file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
+    {
+        file.write(document.toJson());
+    }
+    else
+    {
+        std::cout << "file open failed" << std::endl;
+    }
+    file.close();
+}
+
+void FrameModel::openFile()
+{
+    QStringList selectedFiles = QFileDialog::getOpenFileNames(new QWidget, tr("Open File"), "/path/to/file/", tr("JSON Files (*.ssp)"));
+    QFile file(selectedFiles.at(0));
+    QString str;
+    if(file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray valuesArray = file.readAll();
+        file.close();
+        QJsonDocument valuesDocument(QJsonDocument::fromJson(valuesArray));
+        QJsonObject json = valuesDocument.object();
+        int index = 0;
+        QString imageSizeKey("Image Size");
+        std::cout << str.setNum(json.value(imageSizeKey).toInt()).toStdString() << std::endl;
+        emit setSize(str.setNum(json.value(imageSizeKey).toInt()));
+        foreach(const QString& jsonObject, json.keys())
+        {
+            if (jsonObject != "Image Size")
+            {
+                if (index <= frameStack->count())
+                {
+                    add_image();
+                }
+                QJsonObject frame = json.value(jsonObject).toObject();
+                foreach(const QString& pixelKey, frame.keys())
+                {
+                    QStringList pixelValues;
+                    QJsonObject pixel = frame.value(pixelKey).toObject();
+                    foreach(const QString& pixelValue, pixel.keys())
+                    {
+                        pixelValues.push_back(str.setNum(pixel.value(pixelValue).toInt()));
+                    }
+                    int x = pixelValues[4].toInt();
+                    int y = pixelValues[5].toInt();
+                    int red = pixelValues[3].toInt();
+                    int green = pixelValues[2].toInt();
+                    int blue = pixelValues[1].toInt();
+                    int alpha = pixelValues[0].toInt();
+                    QRgba64 color = qRgba64(red, green, blue, alpha);
+                    dynamic_cast<Frame*>(frameStack->widget(index))->getImage().setPixel(x, y, color);
+                }
+            }
+            index++;
+        }
+    }
 }

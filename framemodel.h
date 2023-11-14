@@ -54,6 +54,8 @@ public slots:
      * @param color
      */
     void backgroundColorChanged(QString color);
+    void saveFile();
+    void openFile();
 
 signals:
     /**
@@ -61,11 +63,13 @@ signals:
      * @param size
      */
     void changeSizeComboBox(QString size);
+    void setSize(QString size);
 
 private:
     QStackedWidget* frameStack;
     int size;
     QColor backgroundColor;
+    QString fileName;
 };
 
 #endif // FRAMEMODEL_H

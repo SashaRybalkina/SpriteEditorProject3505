@@ -36,11 +36,8 @@ public:
     QImage getImage() const { return image; }
 
 public slots:
-    void saveFile();
-    void openFile();
 
 signals:
-    void setSize(QString size);
 
 protected:
     /**
@@ -76,7 +73,6 @@ private:
     QImage image;
     // QPoint lastPoint;
     int image_size;
-    QString fileName;
     QColor backgroundColor;
 };
 
