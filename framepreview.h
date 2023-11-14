@@ -20,7 +20,7 @@ class FramePreview : public QWidget
     Q_OBJECT
 
 public:
-    explicit FramePreview(QStackedWidget* frameStack, FrameModel* frameModel, QWidget *parent = nullptr);
+    explicit FramePreview(QWidget *parent = nullptr);
     ~FramePreview();
 
     void populateFrameStackModel(QStackedWidget* frameStack, FrameModel* frameModel);

@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Sliders.h"
-#include "framemodel.h"
+#include "FrameModel.h"
 #include "ui_framepreview.h"
 #include <QHBoxLayout>
 
@@ -11,7 +11,8 @@ MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(par
     Sliders* sliders = new Sliders(ui);
 
     frameModel.attachStackWidget(ui -> FrameStack);
-//    ui -> widget -> populateFrameStackModel(ui->FrameStack, &frameModel);
+    ui -> widget -> populateFrameStackModel(ui->FrameStack, &frameModel);
+//    ui -> widget -> hide();
     connect(ui -> showButton, &QPushButton::clicked, this, &MainWindow::showFramePreview);
 //    framePreview = new FramePreview(ui->FrameStack, &frameModel, this);
 
@@ -49,16 +50,6 @@ MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(par
 
     // Connects UI to model for updating background color for additonal frames
     connect(ui -> backgroundComboBox, &QComboBox::currentTextChanged, &frameModel, &FrameModel::backgroundColorChanged);
-
-    // Connect color sliders to tools for drawing
-    connect(ui -> redSlider, &QSlider::valueChanged, this, &MainWindow::colorSlidersChanged);
-    connect(ui -> greenSlider, &QSlider::valueChanged, this, &MainWindow::colorSlidersChanged);
-    connect(ui -> blueSlider, &QSlider::valueChanged, this, &MainWindow::colorSlidersChanged);
-    connect(ui -> opacitySlider, &QSlider::valueChanged, this, &MainWindow::colorSlidersChanged);
-    connect(this, &MainWindow::colorChanged, &frameModel, &FrameModel::colorChanged);
-
-    connect(&frameModel, &FrameModel::changeColorSliders, this, &MainWindow::changeColorSliders);
-    toolsSetup(frameModel);
 }
 
 MainWindow::~MainWindow()
@@ -102,38 +93,5 @@ void MainWindow::colorRangeSetup()
 void MainWindow::showFramePreview()
 {
     qDebug() << "show called";
-
-    framePreview->show();
-}
-
-void MainWindow::toolsSetup(FrameModel& frameModel)
-{
-    // Coonnects UI to model for updating when the selected tool is changed
-    connect(ui -> toolListWidget, &QListWidget::currentRowChanged, &frameModel, &FrameModel::toolChanged);
-    connect(ui -> addPenButton, &QPushButton::clicked, this, &MainWindow::addPenClicked);
-    connect(ui -> addPenButton, &QPushButton::clicked, &frameModel, &FrameModel::addPen);
-}
-
-void MainWindow::colorSlidersChanged(int)
-{
-    int red, green, blue, alpha;
-    red = ui -> redSlider -> value();
-    green = ui -> greenSlider -> value();
-    blue = ui -> blueSlider -> value();
-    alpha = ui -> opacitySlider -> value();
-
-    emit colorChanged(QColor(red, green, blue, alpha));
-}
-
-void MainWindow::changeColorSliders(int red, int green, int blue, int alpha)
-{
-    ui -> redSlider -> setValue(red);
-    ui -> greenSlider -> setValue(green);
-    ui -> blueSlider -> setValue(blue);
-    ui -> opacitySlider -> setValue(alpha);
-}
-
-void MainWindow::addPenClicked()
-{
-    ui -> toolListWidget -> addItem("Custom Pen");
+    ui -> widget -> show();
 }

@@ -77,8 +77,3 @@ void Frame::fill(const QPoint &point) {
     image.setPixelColor(image_x, image_y, myPenColor);
     update(); //this->paint();
 }
-
-QColor Frame::getBackgroundColor()
-{
-    return backgroundColor;
-}

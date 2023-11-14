@@ -3,11 +3,9 @@
 #include "ui_framepreview.h"
 #include <QPixmap>
 
-FramePreview::FramePreview(QStackedWidget* frameStack, FrameModel* frameModel, QWidget* parent) :
+FramePreview::FramePreview(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::FramePreview),
-    frameModel(frameModel),
-    frameStack(frameStack),
     currentFrameIndex(0)
 {
     ui->setupUi(this);
@@ -37,7 +35,7 @@ FramePreview::FramePreview(QStackedWidget* frameStack, FrameModel* frameModel, Q
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
 
-    updateCurrentFrame();
+//    updateCurrentFrame();
 }
 
 FramePreview::~FramePreview()

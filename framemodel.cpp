@@ -12,9 +12,7 @@
 #include <QJsonArray>
 #include <QFileDialog>
 
-FrameModel::FrameModel(QObject *parent) : QObject(parent), size(4), backgroundColor(Qt::blue), tools(), currentToolIndex(0)
-{
-    tools.push_back(DrawingTool(QColor(backgroundColor))); // Add eraser
+FrameModel::FrameModel(QObject *parent) : QObject(parent), size(4), backgroundColor(Qt::blue) {
 }
 
 void FrameModel::attachStackWidget(QStackedWidget* frameStackWidget) {
@@ -66,20 +64,12 @@ void FrameModel::nextFrame() {
     int currentIndex = frameStack->currentIndex();
     int nextIndex = (currentIndex + 1) % frameStack->count();
     frameStack->setCurrentIndex(nextIndex);
-
-    tools[0].setToolColor(getBackgroundColorOfCurrentFrame());
-    updateFrameProperties();
-    updateSliders();
 }
 
 void FrameModel::priorFrame() {
     int currentIndex = frameStack->currentIndex();
     int nextIndex = (currentIndex - 1) % frameStack->count();
     frameStack->setCurrentIndex(nextIndex);
-
-    tools[0].setToolColor(getBackgroundColorOfCurrentFrame());
-    updateFrameProperties();
-    updateSliders();
 }
 
 void FrameModel::sizeChanged(QString size_) {
@@ -205,61 +195,3 @@ void FrameModel::openFile()
         }
     }
 }
-
-void FrameModel::toolChanged(int currentRow)
-{
-    currentToolIndex = currentRow;
-
-    switch(currentToolIndex)
-    {
-    case 0:
-        qDebug("Eraser Selected");
-        break;
-    default:
-        qDebug("Pen Selected");
-        break;
-    }
-
-    updateFrameProperties();
-    updateSliders();
-}
-
-void FrameModel::colorChanged(QColor newColor)
-{
-    if(currentToolIndex > 0) // Eraser
-        tools[currentToolIndex].setToolColor(newColor);
-    updateFrameProperties();
-    updateSliders();
-}
-
-void FrameModel::updateFrameProperties()
-{
-    // Update the pen color
-    Frame* currentFrame = qobject_cast<Frame*>(frameStack->widget(frameStack->currentIndex()));
-    currentFrame->setPenColor(tools[currentToolIndex].getToolColor());
-}
-
-void FrameModel::updateSliders()
-{
-    int red, green, blue, alpha;
-    QColor color = tools[currentToolIndex].getToolColor();
-    red = color.red();
-    green = color.green();
-    blue = color.blue();
-    alpha = color.alpha();
-
-    emit changeColorSliders(red, green, blue, alpha);
-}
-
-
-QColor FrameModel::getBackgroundColorOfCurrentFrame()
-{
-    Frame* currentFrame = qobject_cast<Frame*>(frameStack->widget(frameStack->currentIndex()));
-    return currentFrame->getBackgroundColor();
-}
-
-void FrameModel::addPen()
-{
-    tools.push_back(DrawingTool(Qt::black));
-}
-

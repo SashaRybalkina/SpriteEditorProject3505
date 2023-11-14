@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <iostream>
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 class Sliders : public QObject

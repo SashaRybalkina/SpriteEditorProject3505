@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>574</width>
-    <height>517</height>
+    <width>1041</width>
+    <height>545</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -430,7 +430,7 @@
    <widget class="QPushButton" name="showButton">
     <property name="geometry">
      <rect>
-      <x>399</x>
+      <x>400</x>
       <y>40</y>
       <width>131</width>
       <height>24</height>
@@ -440,32 +440,14 @@
      <string>Show Frame Preview</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="toolListWidget">
+   <widget class="FramePreview" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>70</y>
-      <width>141</width>
-      <height>61</height>
+      <x>550</x>
+      <y>10</y>
+      <width>436</width>
+      <height>451</height>
      </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>Eraser</string>
-     </property>
-    </item>
-   </widget>
-   <widget class="QPushButton" name="addPenButton">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>40</y>
-      <width>100</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Add Pen</string>
     </property>
    </widget>
   </widget>
@@ -474,8 +456,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>574</width>
-     <height>22</height>
+     <width>1041</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -510,6 +492,14 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FramePreview</class>
+   <extends>QWidget</extends>
+   <header>framepreview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
