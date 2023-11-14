@@ -5,7 +5,7 @@
 #include "ui_framepreview.h"
 #include <QHBoxLayout>
 
-MainWindow::MainWindow(FrameModel& frameModel, Frame& frame, QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     Sliders* sliders = new Sliders(ui);
@@ -42,10 +42,10 @@ MainWindow::MainWindow(FrameModel& frameModel, Frame& frame, QWidget *parent): Q
     // Connect model to UI for changing back frame size if user picks no during warning
     connect(&frameModel, &FrameModel::changeSizeComboBox, ui -> sizeComboBox, &QComboBox::setCurrentText);
 
-    connect(ui -> actionSave, &QAction::triggered, &frame, &Frame::saveFile);
-    connect(ui -> actionOpen, &QAction::triggered, &frame, &Frame::openFile);
+    connect(ui -> actionSave, &QAction::triggered, &frameModel, &FrameModel::saveFile);
+    connect(ui -> actionOpen, &QAction::triggered, &frameModel, &FrameModel::openFile);
 
-    connect(&frame, &Frame::setSize, ui -> sizeComboBox, &QComboBox::setCurrentText);
+    connect(&frameModel, &FrameModel::setSize, ui -> sizeComboBox, &QComboBox::setCurrentText);
 
     // Connects UI to model for updating background color for additonal frames
     connect(ui -> backgroundComboBox, &QComboBox::currentTextChanged, &frameModel, &FrameModel::backgroundColorChanged);
