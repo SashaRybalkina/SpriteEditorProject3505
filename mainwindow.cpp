@@ -50,6 +50,16 @@ MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(par
 
     // Connects UI to model for updating background color for additonal frames
     connect(ui -> backgroundComboBox, &QComboBox::currentTextChanged, &frameModel, &FrameModel::backgroundColorChanged);
+  
+  // Connect color sliders to tools for drawing
+    connect(ui -> redSlider, &QSlider::valueChanged, this, &MainWindow::colorSlidersChanged);
+    connect(ui -> greenSlider, &QSlider::valueChanged, this, &MainWindow::colorSlidersChanged);
+    connect(ui -> blueSlider, &QSlider::valueChanged, this, &MainWindow::colorSlidersChanged);
+    connect(ui -> opacitySlider, &QSlider::valueChanged, this, &MainWindow::colorSlidersChanged);
+    connect(this, &MainWindow::colorChanged, &frameModel, &FrameModel::colorChanged);
+
+    connect(&frameModel, &FrameModel::changeColorSliders, this, &MainWindow::changeColorSliders);
+    toolsSetup(frameModel);
 }
 
 MainWindow::~MainWindow()
@@ -95,3 +105,38 @@ void MainWindow::showFramePreview()
     qDebug() << "show called";
     ui -> widget -> show();
 }
+
+void MainWindow::toolsSetup(FrameModel& frameModel)
+{
+    // Coonnects UI to model for updating when the selected tool is changed
+    connect(ui -> toolListWidget, &QListWidget::currentRowChanged, &frameModel, &FrameModel::toolChanged);
+    connect(ui -> addPenButton, &QPushButton::clicked, this, &MainWindow::addPenClicked);
+    connect(ui -> addPenButton, &QPushButton::clicked, &frameModel, &FrameModel::addPen);
+}
+
+void MainWindow::colorSlidersChanged(int)
+{
+    int red, green, blue, alpha;
+    red = ui -> redSlider -> value();
+    green = ui -> greenSlider -> value();
+    blue = ui -> blueSlider -> value();
+    alpha = ui -> opacitySlider -> value();
+
+    emit colorChanged(QColor(red, green, blue, alpha));
+}
+
+void MainWindow::changeColorSliders(int red, int green, int blue, int alpha)
+{
+    ui -> redSlider -> setValue(red);
+    ui -> greenSlider -> setValue(green);
+    ui -> blueSlider -> setValue(blue);
+    ui -> opacitySlider -> setValue(alpha);
+}
+
+void MainWindow::addPenClicked()
+{
+    QListWidgetItem* item = new QListWidgetItem("Custom Pen");
+    item->setFlags(Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+    ui -> toolListWidget -> addItem(item);
+}
+
