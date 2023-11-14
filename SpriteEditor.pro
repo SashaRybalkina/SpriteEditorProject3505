@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     Sliders.cpp \
+    drawingtool.cpp \
     frame.cpp \
     framemodel.cpp \
     framepreview.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     Sliders.h \
+    drawingtool.h \
     frame.h \
     framemodel.h \
     framepreview.h \

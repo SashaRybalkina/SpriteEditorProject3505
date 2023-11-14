@@ -4,6 +4,7 @@
 #include <QObject>
 #include "frame.h"
 #include <QStackedWidget>
+#include "drawingtool.h"
 
 class FrameModel : public QObject
 {
@@ -26,6 +27,19 @@ public:
 
 
     QImage getImageAt(int index);
+
+    /**
+     * @brief toolChanged gets a new tool when the list changes tools
+     * @param current
+     * @param previous
+     */
+    void toolChanged(int currentRow);
+    /**
+     * @brief colorChanged updates drawing color when a slider is changed.
+     * @param newColor
+     */
+    void colorChanged(QColor newColor);
+
 
 public slots:
     /**
@@ -64,12 +78,44 @@ signals:
      */
     void changeSizeComboBox(QString size);
     void setSize(QString size);
+    /**
+     * @brief changeColorSliders - Signal for setting the color sliders when tool changes
+     * @param red - [0-255] red color component
+     * @param green - [0-255] green color component
+     * @param blue - [0-255] blue color component
+     * @param alpha - [0-255] alpha color component
+     */
+    void changeColorSliders(int red, int green, int blue, int alpha);
+
 
 private:
     QStackedWidget* frameStack;
     int size;
     QColor backgroundColor;
     QString fileName;
+
+    /**
+     * @brief Contains a list of all tools currently open
+     */
+    std::vector<DrawingTool> tools;
+    /**
+     * @brief currentToolIndex contains the index of the current tool
+     */
+    int currentToolIndex;
+    /**
+     * @brief updateFrameProperties updates the frames colorPen to match the current tool
+     */
+    void updateFrameProperties();
+    /**
+     * @brief updateSliders - updates the color sliders to have the same rgb values as the current tool
+     */
+    void updateSliders();
+    /**
+     * @brief getBackgroundColorOfCurrentFrame - the eraser tool is constatntly locked on the background color.
+     * This helper method gets the background color of the current frame.
+     * @return
+     */
+    QColor getBackgroundColorOfCurrentFrame();
 };
 
 #endif // FRAMEMODEL_H

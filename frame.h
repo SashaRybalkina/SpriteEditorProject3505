@@ -35,6 +35,9 @@ public:
 
     QImage getImage() const { return image; }
 
+    QColor getBackgroundColor();
+
+
 public slots:
 
 signals:

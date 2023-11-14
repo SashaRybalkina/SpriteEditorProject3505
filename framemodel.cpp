@@ -195,3 +195,56 @@ void FrameModel::openFile()
         }
     }
 }
+
+void FrameModel::toolChanged(int currentRow)
+{
+    currentToolIndex = currentRow;
+
+    switch(currentToolIndex)
+    {
+    case 0:
+        qDebug("Eraser Selected");
+        break;
+    default:
+        qDebug("Pen Selected");
+        break;
+    }
+
+    updateFrameProperties();
+    updateSliders();
+}
+
+void FrameModel::colorChanged(QColor newColor)
+{
+    if(currentToolIndex > 0) // Eraser
+        tools[currentToolIndex].setToolColor(newColor);
+    updateFrameProperties();
+    updateSliders();
+}
+
+void FrameModel::updateFrameProperties()
+{
+    // Update the pen color
+    Frame* currentFrame = qobject_cast<Frame*>(frameStack->widget(frameStack->currentIndex()));
+    currentFrame->setPenColor(tools[currentToolIndex].getToolColor());
+}
+
+void FrameModel::updateSliders()
+{
+    int red, green, blue, alpha;
+    QColor color = tools[currentToolIndex].getToolColor();
+    red = color.red();
+    green = color.green();
+    blue = color.blue();
+    alpha = color.alpha();
+
+    emit changeColorSliders(red, green, blue, alpha);
+}
+
+
+QColor FrameModel::getBackgroundColorOfCurrentFrame()
+{
+    Frame* currentFrame = qobject_cast<Frame*>(frameStack->widget(frameStack->currentIndex()));
+    return currentFrame->getBackgroundColor();
+}
+
