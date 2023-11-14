@@ -2,7 +2,6 @@
 #define FRAMEMODEL_H
 
 #include <QObject>
-#include "frame.h"
 #include <QStackedWidget>
 #include "drawingtool.h"
 
@@ -70,6 +69,8 @@ public slots:
     void backgroundColorChanged(QString color);
     void saveFile();
     void openFile();
+
+    void addPen();
 
 signals:
     /**

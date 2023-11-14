@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "Sliders.h"
 #include "framemodel.h"
 #include "framepreview.h"
 
@@ -17,12 +16,6 @@ class MainWindow : public QMainWindow
 private slots:
     void showFramePreview();
     /**
-     * @brief addPenClicked - adds another pen tool to the tools list.
-     */
-    void addPenClicked();
-
-signals:
-    /**
      * @brief colorSlidersChanged - changes the model when the sliders change
      * @param value
      */
@@ -32,7 +25,12 @@ signals:
      *  @brief Updates the color sliders from the model when the tool changes
      */
     void changeColorSliders(int red, int green, int blue, int alpha);
+    /**
+     * @brief addPenClicked - adds another pen tool to the tools list.
+     */
+    void addPenClicked();
 
+signals:
     /**
      * @brief colorChanged - signals the model that the color has changed.
      * @param color

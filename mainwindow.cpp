@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Sliders.h"
-#include "FrameModel.h"
+#include "framemodel.h"
 #include "ui_framepreview.h"
 #include <QHBoxLayout>
 
@@ -111,6 +111,7 @@ void MainWindow::toolsSetup(FrameModel& frameModel)
     // Coonnects UI to model for updating when the selected tool is changed
     connect(ui -> toolListWidget, &QListWidget::currentRowChanged, &frameModel, &FrameModel::toolChanged);
     connect(ui -> addPenButton, &QPushButton::clicked, this, &MainWindow::addPenClicked);
+    connect(ui -> addPenButton, &QPushButton::clicked, &frameModel, &FrameModel::addPen);
 }
 
 void MainWindow::colorSlidersChanged(int)

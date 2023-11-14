@@ -12,7 +12,9 @@
 #include <QJsonArray>
 #include <QFileDialog>
 
-FrameModel::FrameModel(QObject *parent) : QObject(parent), size(4), backgroundColor(Qt::blue) {
+FrameModel::FrameModel(QObject *parent) : QObject(parent), size(4), backgroundColor(Qt::blue), tools(), currentToolIndex(0)
+{
+    tools.push_back(DrawingTool(QColor(backgroundColor))); // Add eraser
 }
 
 void FrameModel::attachStackWidget(QStackedWidget* frameStackWidget) {
@@ -64,12 +66,20 @@ void FrameModel::nextFrame() {
     int currentIndex = frameStack->currentIndex();
     int nextIndex = (currentIndex + 1) % frameStack->count();
     frameStack->setCurrentIndex(nextIndex);
+
+    tools[0].setToolColor(getBackgroundColorOfCurrentFrame());
+    updateFrameProperties();
+    updateSliders();
 }
 
 void FrameModel::priorFrame() {
     int currentIndex = frameStack->currentIndex();
     int nextIndex = (currentIndex - 1) % frameStack->count();
     frameStack->setCurrentIndex(nextIndex);
+
+    tools[0].setToolColor(getBackgroundColorOfCurrentFrame());
+    updateFrameProperties();
+    updateSliders();
 }
 
 void FrameModel::sizeChanged(QString size_) {
@@ -246,5 +256,10 @@ QColor FrameModel::getBackgroundColorOfCurrentFrame()
 {
     Frame* currentFrame = qobject_cast<Frame*>(frameStack->widget(frameStack->currentIndex()));
     return currentFrame->getBackgroundColor();
+}
+
+void FrameModel::addPen()
+{
+    tools.push_back(DrawingTool(Qt::black));
 }
 
