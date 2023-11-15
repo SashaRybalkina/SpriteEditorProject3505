@@ -68,12 +68,14 @@ void FrameModel::nextFrame() {
     int currentIndex = frameStack->currentIndex();
     int nextIndex = (currentIndex + 1) % frameStack->count();
     frameStack->setCurrentIndex(nextIndex);
+    updateFrameProperties();
 }
 
 void FrameModel::priorFrame() {
     int currentIndex = frameStack->currentIndex();
     int nextIndex = (currentIndex - 1) % frameStack->count();
     frameStack->setCurrentIndex(nextIndex);
+    updateFrameProperties();
 }
 
 void FrameModel::sizeChanged(QString size_) {
@@ -242,7 +244,7 @@ void FrameModel::updateFrameProperties()
 {
     // Update the pen color
     Frame* currentFrame = qobject_cast<Frame*>(frameStack->widget(frameStack->currentIndex()));
-    currentFrame->changeTool(&tools[currentToolIndex]);
+    currentFrame->changeTool(&(tools[currentToolIndex]));
 }
 
 void FrameModel::updateSliders()

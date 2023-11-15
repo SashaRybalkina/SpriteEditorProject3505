@@ -121,6 +121,7 @@ void MainWindow::toolsSetup(FrameModel& frameModel)
     connect(ui -> addPenButton, &QPushButton::clicked, &frameModel, &FrameModel::addPen);
     // Brush Size Connection
     connect(ui -> brushSizeSpinBox, &QSpinBox::valueChanged, &frameModel, &FrameModel::brushSizeChanged);
+    addPenClicked();
 }
 
 void MainWindow::colorSlidersChanged(int)
