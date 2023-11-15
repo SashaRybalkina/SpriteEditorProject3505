@@ -160,7 +160,7 @@ void FrameModel::openFile()
     // Check if any file was selected
     if (selectedFiles.isEmpty())
     {
-        return;
+        return; // No file was selected, so return early
     }
 
     QFile file(selectedFiles.at(0));
@@ -180,7 +180,6 @@ void FrameModel::openFile()
             {
                 QString stringIndex = jsonObject.mid(6,7);
                 int index = stringIndex.toInt();
-                //Adds all necessary stacks so index doesn't go out of bounds
                 while (index > frameStack->count())
                 {
                     add_image();
@@ -206,7 +205,6 @@ void FrameModel::openFile()
                 biggestIndex++;
             }
         }
-        //Deletes any excessive stacks
         while (biggestIndex < frameStack->count())
         {
             frameStack->removeWidget(frameStack->widget(frameStack->count()-1));
@@ -228,7 +226,6 @@ void FrameModel::toolChanged(int currentRow)
         qDebug("Pen Selected");
         break;
     }
-
     updateFrameProperties();
     updateSliders();
 }
@@ -259,6 +256,7 @@ void FrameModel::updateSliders()
     alpha = color.alpha();
 
     emit changeColorSliders(red, green, blue, alpha);
+    emit updateBrushSize(tools[currentToolIndex].getBrushSize());
 }
 
 

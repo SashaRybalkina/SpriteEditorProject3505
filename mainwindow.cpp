@@ -12,20 +12,18 @@ MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(par
 
     frameModel.attachStackWidget(ui -> FrameStack);
     ui -> widget -> populateFrameStackModel(ui->FrameStack, &frameModel);
-//    ui -> widget -> hide();
+    //    ui -> widget -> hide();
     connect(ui -> showButton, &QPushButton::clicked, this, &MainWindow::showFramePreview);
-//    framePreview = new FramePreview(ui->FrameStack, &frameModel, this);
+    //    framePreview = new FramePreview(ui->FrameStack, &frameModel, this);
 
     styleSetup();
     colorRangeSetup();
 
-    // Connect UI to sliders class to change text label near the red, green, blue, and opacity sliders.
     connect(ui -> redSlider, &QSlider::valueChanged, sliders, &Sliders::setRedText);
     connect(ui -> greenSlider, &QSlider::valueChanged, sliders, &Sliders::setGreenText);
     connect(ui -> blueSlider, &QSlider::valueChanged, sliders, &Sliders::setBlueText);
     connect(ui -> opacitySlider, &QSlider::valueChanged, sliders, &Sliders::setOpacityText);
 
-    // Connect UI to sliders classs to set the red, green, blue, and opacity sliders
     connect(ui -> redInput, &QLineEdit::textEdited, sliders, &Sliders::setRedSlider);
     connect(ui -> greenInput, &QLineEdit::textEdited, sliders, &Sliders::setGreenSlider);
     connect(ui -> blueInput, &QLineEdit::textEdited, sliders, &Sliders::setBlueSlider);
@@ -51,15 +49,16 @@ MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(par
     // Connect model to UI for changing back frame size if user picks no during warning
     connect(&frameModel, &FrameModel::changeSizeComboBox, ui -> sizeComboBox, &QComboBox::setCurrentText);
 
-    // Connect UI to frame model to save file
     connect(ui -> actionSave, &QAction::triggered, &frameModel, &FrameModel::saveFile);
-    // Connect UI to frame model to open file
     connect(ui -> actionOpen, &QAction::triggered, &frameModel, &FrameModel::openFile);
-    // Connect frame model to ui to set size specified in file
+
     connect(&frameModel, &FrameModel::setSize, ui -> sizeComboBox, &QComboBox::setCurrentText);
 
     // Connects UI to model for updating background color for additonal frames
     connect(ui -> backgroundComboBox, &QComboBox::currentTextChanged, &frameModel, &FrameModel::backgroundColorChanged);
+
+    connect(ui -> actionOpen, &QAction::triggered, this, &MainWindow::handleOpen);
+
 
     toolsSetup(frameModel);
 }
@@ -70,9 +69,6 @@ MainWindow::~MainWindow()
     delete framePreview;
 }
 
-/**
- * @brief MainWindow::styleSetup allows the color and opacity sliders to have a cool gradient effect.
- */
 void MainWindow::styleSetup()
 {
     QString universalStyle1 = "QSlider::groove:horizontal {border: 2px solid ";
@@ -92,10 +88,6 @@ void MainWindow::styleSetup()
     ui -> opacityInput-> setStyleSheet(QString("border: 2.5px solid #555555"));
 }
 
-/**
- * @brief MainWindow::colorRangeSetup sets every color slider to have a range of 0 to 255
- * and only lets the text input take in integer values.
- */
 void MainWindow::colorRangeSetup()
 {
     ui -> redInput-> setValidator(new QIntValidator(this));
@@ -132,6 +124,7 @@ void MainWindow::toolsSetup(FrameModel& frameModel)
     connect(ui -> addPenButton, &QPushButton::clicked, &frameModel, &FrameModel::addPen);
     // Brush Size Connection
     connect(ui -> brushSizeSpinBox, &QSpinBox::valueChanged, &frameModel, &FrameModel::brushSizeChanged);
+    connect(&frameModel, &FrameModel::updateBrushSize, this, &MainWindow::updateBrushSpinBox);
     addPenClicked();
 }
 
@@ -167,4 +160,14 @@ void MainWindow::updateFrameCount()
     totalFrames = frameModel.getTotalFrames();
     currentFrame = frameModel.getCurrentFrame();
     ui->frameCount->setText(QString::number(currentFrame) + "/" + QString::number(totalFrames));
+}
+
+void MainWindow::handleOpen(){
+    updateFrameCount();
+
+}
+
+void MainWindow::updateBrushSpinBox(int value)
+{
+    ui -> brushSizeSpinBox -> setValue(value);
 }

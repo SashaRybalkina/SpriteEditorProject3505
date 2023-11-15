@@ -44,6 +44,7 @@ public:
     int getTotalFrames() const;
     int getCurrentFrame() const;
 
+
 public slots:
     /**
      * @brief addFrame calls add_image to add new Sprite frame
@@ -71,13 +72,7 @@ public slots:
      * @param color
      */
     void backgroundColorChanged(QString color);
-    /**
-     * @brief saveFile save current frames and pixels in a json file
-     */
     void saveFile();
-    /**
-     * @brief openFile open json file and set up the frames and pixels in the file
-     */
     void openFile();
 
     void addPen();
@@ -89,10 +84,6 @@ signals:
      * @param size
      */
     void changeSizeComboBox(QString size);
-    /**
-     * @brief setSize sets the size of the image according to the file opened
-     * @param size
-     */
     void setSize(QString size);
 
     /**
@@ -103,6 +94,7 @@ signals:
      * @param alpha - [0-255] alpha color component
      */
     void changeColorSliders(int red, int green, int blue, int alpha);
+    void updateBrushSize(int value);
 
 private:
     QStackedWidget* frameStack;
@@ -132,6 +124,8 @@ private:
      * @return
      */
     QColor getBackgroundColorOfCurrentFrame();
+
+
 
 };
 

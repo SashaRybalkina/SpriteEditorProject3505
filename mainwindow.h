@@ -31,11 +31,13 @@ private slots:
      */
     void addPenClicked();
 
-
+    void handleOpen();
 public:
     MainWindow(FrameModel& frameModel, QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void updateBrushSpinBox(int value);
 
 signals:
     /**
