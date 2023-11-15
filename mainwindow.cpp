@@ -14,7 +14,6 @@ MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(par
     ui -> widget -> populateFrameStackModel(ui->FrameStack, &frameModel);
     //    ui -> widget -> hide();
     connect(ui -> showButton, &QPushButton::clicked, this, &MainWindow::showFramePreview);
-    //    framePreview = new FramePreview(ui->FrameStack, &frameModel, this);
 
     styleSetup();
     colorRangeSetup();
