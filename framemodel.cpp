@@ -160,7 +160,7 @@ void FrameModel::openFile()
     // Check if any file was selected
     if (selectedFiles.isEmpty())
     {
-        return; // No file was selected, so return early
+        return;
     }
 
     QFile file(selectedFiles.at(0));
@@ -180,6 +180,7 @@ void FrameModel::openFile()
             {
                 QString stringIndex = jsonObject.mid(6,7);
                 int index = stringIndex.toInt();
+                //Adds all necessary stacks so index doesn't go out of bounds
                 while (index > frameStack->count())
                 {
                     add_image();
@@ -205,6 +206,7 @@ void FrameModel::openFile()
                 biggestIndex++;
             }
         }
+        //Deletes any excessive stacks
         while (biggestIndex < frameStack->count())
         {
             frameStack->removeWidget(frameStack->widget(frameStack->count()-1));

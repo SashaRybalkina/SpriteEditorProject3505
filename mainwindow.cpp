@@ -19,11 +19,13 @@ MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(par
     styleSetup();
     colorRangeSetup();
 
+    // Connect UI to sliders class to change text label near the red, green, blue, and opacity sliders.
     connect(ui -> redSlider, &QSlider::valueChanged, sliders, &Sliders::setRedText);
     connect(ui -> greenSlider, &QSlider::valueChanged, sliders, &Sliders::setGreenText);
     connect(ui -> blueSlider, &QSlider::valueChanged, sliders, &Sliders::setBlueText);
     connect(ui -> opacitySlider, &QSlider::valueChanged, sliders, &Sliders::setOpacityText);
 
+    // Connect UI to sliders classs to set the red, green, blue, and opacity sliders
     connect(ui -> redInput, &QLineEdit::textEdited, sliders, &Sliders::setRedSlider);
     connect(ui -> greenInput, &QLineEdit::textEdited, sliders, &Sliders::setGreenSlider);
     connect(ui -> blueInput, &QLineEdit::textEdited, sliders, &Sliders::setBlueSlider);
@@ -49,9 +51,11 @@ MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(par
     // Connect model to UI for changing back frame size if user picks no during warning
     connect(&frameModel, &FrameModel::changeSizeComboBox, ui -> sizeComboBox, &QComboBox::setCurrentText);
 
+    // Connect UI to frame model to save file
     connect(ui -> actionSave, &QAction::triggered, &frameModel, &FrameModel::saveFile);
+    // Connect UI to frame model to open file
     connect(ui -> actionOpen, &QAction::triggered, &frameModel, &FrameModel::openFile);
-
+    // Connect frame model to ui to set size specified in file
     connect(&frameModel, &FrameModel::setSize, ui -> sizeComboBox, &QComboBox::setCurrentText);
 
     // Connects UI to model for updating background color for additonal frames
@@ -66,6 +70,9 @@ MainWindow::~MainWindow()
     delete framePreview;
 }
 
+/**
+ * @brief MainWindow::styleSetup allows the color and opacity sliders to have a cool gradient effect.
+ */
 void MainWindow::styleSetup()
 {
     QString universalStyle1 = "QSlider::groove:horizontal {border: 2px solid ";
@@ -85,6 +92,10 @@ void MainWindow::styleSetup()
     ui -> opacityInput-> setStyleSheet(QString("border: 2.5px solid #555555"));
 }
 
+/**
+ * @brief MainWindow::colorRangeSetup sets every color slider to have a range of 0 to 255
+ * and only lets the text input take in integer values.
+ */
 void MainWindow::colorRangeSetup()
 {
     ui -> redInput-> setValidator(new QIntValidator(this));
@@ -95,7 +106,7 @@ void MainWindow::colorRangeSetup()
     ui -> redSlider -> setRange(0, 255);
     ui -> greenSlider -> setRange(0, 255);
     ui -> blueSlider -> setRange(0, 255);
-    ui -> opacitySlider -> setRange(0, 1000);
+    ui -> opacitySlider -> setRange(0, 255);
 }
 
 void MainWindow::showFramePreview()

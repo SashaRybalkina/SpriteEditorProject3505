@@ -71,7 +71,13 @@ public slots:
      * @param color
      */
     void backgroundColorChanged(QString color);
+    /**
+     * @brief saveFile save current frames and pixels in a json file
+     */
     void saveFile();
+    /**
+     * @brief openFile open json file and set up the frames and pixels in the file
+     */
     void openFile();
 
     void addPen();
@@ -83,6 +89,10 @@ signals:
      * @param size
      */
     void changeSizeComboBox(QString size);
+    /**
+     * @brief setSize sets the size of the image according to the file opened
+     * @param size
+     */
     void setSize(QString size);
 
     /**

@@ -21,7 +21,7 @@ Frame::Frame(int size, QColor backgroundColor, DrawingTool* currentTool)
 }
 
 void Frame::createImage() {
-    image = QImage(image_size, image_size, QImage::Format_RGB32);
+    image = QImage(image_size, image_size, QImage::Format_ARGB32);
     image.fill(backgroundColor);
     update();
     qDebug("Update Called");
