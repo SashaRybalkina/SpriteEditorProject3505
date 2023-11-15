@@ -9,12 +9,12 @@
 #include <QJsonArray>
 #include <QFileDialog>
 
-Frame::Frame(int size, QColor backgroundColor)
+Frame::Frame(int size, QColor backgroundColor, DrawingTool* currentTool)
     : QWidget(nullptr)
 {
     qDebug("Frame created");
-
     setAttribute(Qt::WA_StaticContents);
+    this->tool = currentTool;
     this->image_size = size;
     this->backgroundColor = backgroundColor;
     this->createImage();
@@ -25,12 +25,6 @@ void Frame::createImage() {
     image.fill(backgroundColor);
     update();
     qDebug("Update Called");
-    this->setPenColor(Qt::black);
-}
-
-void Frame::setPenColor(const QColor &newColor)
-{
-    myPenColor = newColor;
 }
 
 void Frame::mousePressEvent(QMouseEvent *event)
@@ -65,6 +59,33 @@ void Frame::paintEvent(QPaintEvent *event)
 
 void Frame::fill(const QPoint &point) {
     // think 0, 0 top left
+    int radius = tool->getBrushSize()-1;
+    QPoint centerPosition = getPixelLocationFromMousePosition(point);
+    for(int x = centerPosition.x() - radius; x <= centerPosition.x() + radius; x++)
+    {
+        for(int y = centerPosition.y() - radius; y <= centerPosition.y() + radius; y++)
+        {
+            image.setPixelColor(x, y, tool->getToolColor());
+        }
+    }
+
+    update(); //this->paint();
+}
+
+QColor Frame::getBackgroundColor()
+{
+    return backgroundColor;
+}
+
+void Frame::changeTool(DrawingTool* tool)
+{
+    this->tool = tool;
+}
+
+
+QPoint Frame::getPixelLocationFromMousePosition(const QPoint &point)
+{
+    // think 0, 0 top left
     int x = point.x();
     int y = point.y();
     QSize widget_size = size();
@@ -73,12 +94,5 @@ void Frame::fill(const QPoint &point) {
     double pixel_size = (double) x_len / image_size;
     int image_x = (int)(x / pixel_size);
     int image_y = (int)(y / pixel_size);
-
-    image.setPixelColor(image_x, image_y, myPenColor);
-    update(); //this->paint();
-}
-
-QColor Frame::getBackgroundColor()
-{
-    return backgroundColor;
+    return QPoint(image_x, image_y);
 }

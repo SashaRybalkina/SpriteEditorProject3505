@@ -1,7 +1,7 @@
 #include "drawingtool.h"
 
 
-DrawingTool::DrawingTool(): color_(QColor("Black"))
+DrawingTool::DrawingTool(): color_(QColor("Black")), brushSize(1)
 {
 
 }
@@ -36,4 +36,14 @@ QColor DrawingTool::getToolColor()
 void DrawingTool::setToolColor(QColor color)
 {
     color_ = color;
+}
+
+void DrawingTool::setBrushSize(int size)
+{
+    brushSize = size;
+}
+
+int DrawingTool::getBrushSize()
+{
+    return brushSize;
 }

@@ -15,6 +15,7 @@
 FrameModel::FrameModel(QObject *parent) : QObject(parent), size(4), backgroundColor(Qt::blue), tools(), currentToolIndex(0)
 {
     tools.push_back(DrawingTool(QColor(backgroundColor))); // Add eraser
+    addPen();
 }
 
 
@@ -27,7 +28,7 @@ void FrameModel::attachStackWidget(QStackedWidget* frameStackWidget) {
 // method
 void FrameModel::add_image() {
     qDebug() << backgroundColor;
-    Frame* frame = new Frame(this->size, backgroundColor);
+    Frame* frame = new Frame(this->size, backgroundColor, &tools[currentToolIndex]);
     frameStack->addWidget(frame);
     qDebug() << frameStack->count();
 }
@@ -113,8 +114,7 @@ void FrameModel::saveFile()
 {
     if (fileName.isEmpty())
     {
-        QStringList selectedFiles = QFileDialog::getOpenFileNames(new QWidget, tr("Open File"),"/path/to/file/",tr("JSON Files (*.ssp)"));
-        fileName = selectedFiles.at(0);
+        fileName = QFileDialog::getSaveFileName(new QWidget, tr("Open File"),"/path/to/file/",tr("JSON Files (*.ssp)"));
     }
 
     QJsonObject content;
@@ -163,15 +163,16 @@ void FrameModel::openFile()
         file.close();
         QJsonDocument valuesDocument(QJsonDocument::fromJson(valuesArray));
         QJsonObject json = valuesDocument.object();
-        int index = 0;
         QString imageSizeKey("Image Size");
-        std::cout << str.setNum(json.value(imageSizeKey).toInt()).toStdString() << std::endl;
         emit setSize(str.setNum(json.value(imageSizeKey).toInt()));
+        int biggestIndex = 0;
         foreach(const QString& jsonObject, json.keys())
         {
             if (jsonObject != "Image Size")
             {
-                if (index <= frameStack->count())
+                QString stringIndex = jsonObject.mid(6,7);
+                int index = stringIndex.toInt();
+                while (index > frameStack->count())
                 {
                     add_image();
                 }
@@ -189,12 +190,16 @@ void FrameModel::openFile()
                     int red = pixelValues[3].toInt();
                     int green = pixelValues[2].toInt();
                     int blue = pixelValues[1].toInt();
-                    int alpha = pixelValues[0].toInt();
-                    QRgba64 color = qRgba64(red, green, blue, alpha);
-                    dynamic_cast<Frame*>(frameStack->widget(index))->getImage().setPixel(x, y, color);
+                    int alpha = pixelValues[0].toDouble();
+                    QColor color = QColor(red, green, blue, alpha);
+                    dynamic_cast<Frame*>(frameStack->widget(index-1))->image.setPixelColor(x, y, color);
                 }
+                biggestIndex++;
             }
-            index++;
+        }
+        while (biggestIndex < frameStack->count())
+        {
+            frameStack->removeWidget(frameStack->widget(frameStack->count()-1));
         }
     }
 }
@@ -222,6 +227,7 @@ void FrameModel::colorChanged(QColor newColor)
 {
     if(currentToolIndex > 0) // Eraser
         tools[currentToolIndex].setToolColor(newColor);
+
     updateFrameProperties();
     updateSliders();
 }
@@ -230,7 +236,7 @@ void FrameModel::updateFrameProperties()
 {
     // Update the pen color
     Frame* currentFrame = qobject_cast<Frame*>(frameStack->widget(frameStack->currentIndex()));
-    currentFrame->setPenColor(tools[currentToolIndex].getToolColor());
+    currentFrame->changeTool(&tools[currentToolIndex]);
 }
 
 void FrameModel::updateSliders()
@@ -255,4 +261,11 @@ QColor FrameModel::getBackgroundColorOfCurrentFrame()
 void FrameModel::addPen()
 {
     tools.push_back(DrawingTool(Qt::black));
+}
+
+void FrameModel::brushSizeChanged(int newSize)
+{
+    tools[currentToolIndex].setBrushSize(newSize);
+    qDebug("Brush Size Changed");
+    updateFrameProperties();
 }

@@ -4,17 +4,19 @@
 #include <QImage>
 #include <QMouseEvent>
 #include <QWidget>
+#include "drawingtool.h"
 
 class Frame : public QWidget
 {
     Q_OBJECT
 public:
+    QImage image;
     /**
      * @brief Frame data structure for Widget that holds image as internal strucutre and paints it onto itself
      * @param parent widgets parent
      * @param size pixel dimension for underlying image
      */
-    Frame(int size = 4, QColor backgroundColor = Qt::blue);
+    Frame(int size = 4, QColor backgroundColor = Qt::blue, DrawingTool* tool = nullptr);
 
     /**
      * @brief createImage creates a frame default filled in
@@ -22,21 +24,17 @@ public:
     void createImage();
     // bool saveImage(const QString &fileName, const char *fileFormat);
 
-    /**
-     * @brief setPenColor
-     * @param newColor to change pen to
-     */
-    void setPenColor(const QColor &newColor);
     // void setPenWidth(int newWidth);
 
     // bool isModified() const { return modified; }
-    QColor penColor() const { return myPenColor; }
+//    QColor penColor() const { return myPenColor; }
     // int penWidth() const { return myPenWidth; }
 
     QImage getImage() const { return image; }
 
     QColor getBackgroundColor();
 
+    void changeTool(DrawingTool* newTool);
 
 public slots:
 
@@ -72,11 +70,12 @@ private:
     // bool modified = false;
     bool filling = false;
     // int myPenWidth = 1;
-    QColor myPenColor = Qt::blue;
-    QImage image;
     // QPoint lastPoint;
     int image_size;
     QColor backgroundColor;
+    DrawingTool* tool;
+
+    QPoint getPixelLocationFromMousePosition(const QPoint &Point);
 };
 
 #endif // FRAME_H

@@ -40,8 +40,34 @@ public:
      */
     void setToolColor(QColor color);
 
+    /**
+     * @brief getColor - returns the current brush color
+     * @return
+     */
+    QColor getColor();
+
+    /**
+     * @brief setBrushSize - sets the brush size
+     * @param size
+     */
+    void setBrushSize(int size);
+
+    /**
+     * @brief getBrushSize - returns the current brush size
+     * @return
+     */
+    int getBrushSize();
+
 private:
+    /**
+     * @brief color_ - stores the current brush color
+     */
     QColor color_;
+
+    /**
+     * @brief brushSize - stores the current brush size.
+     */
+    int brushSize;
 
 };
 

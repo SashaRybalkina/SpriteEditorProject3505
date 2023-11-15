@@ -72,6 +72,7 @@ public slots:
     void openFile();
 
     void addPen();
+    void brushSizeChanged(int newSize);
 
 signals:
     /**
@@ -118,6 +119,7 @@ private:
      * @return
      */
     QColor getBackgroundColorOfCurrentFrame();
+
 };
 
 #endif // FRAMEMODEL_H
