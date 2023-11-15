@@ -41,6 +41,9 @@ public:
 
     QImage getImageAt(int index);
 
+    int getTotalFrames() const;
+    int getCurrentFrame() const;
+
 public slots:
     /**
      * @brief addFrame calls add_image to add new Sprite frame

@@ -5,7 +5,7 @@
 #include "ui_framepreview.h"
 #include <QHBoxLayout>
 
-MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow), frameModel(frameModel), currentFrame(0), totalFrames(0)
 {
     ui->setupUi(this);
     Sliders* sliders = new Sliders(ui);
@@ -37,6 +37,12 @@ MainWindow::MainWindow(FrameModel& frameModel, QWidget *parent): QMainWindow(par
     connect(ui -> forwardButton, &QPushButton::clicked, &frameModel, &FrameModel::nextFrame);
     // Connects UI to model for moving backward through Sprite Frames
     connect(ui -> backwardButton, &QPushButton::clicked, &frameModel, &FrameModel::priorFrame);
+
+
+    connect(ui->AddButton, &QPushButton::clicked, this, &MainWindow::updateFrameCount);
+    connect(ui->DeleteButton, &QPushButton::clicked, this, &MainWindow::updateFrameCount);
+    connect(ui->forwardButton, &QPushButton::clicked, this, &MainWindow::updateFrameCount);
+    connect(ui->backwardButton, &QPushButton::clicked, this, &MainWindow::updateFrameCount);
 
     // Connects UI to model for updating frame size
     connect(ui -> sizeComboBox, &QComboBox::currentTextChanged, &frameModel, &FrameModel::sizeChanged);
@@ -142,4 +148,11 @@ void MainWindow::addPenClicked()
     item->setFlags(Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
     ui -> toolListWidget -> addItem(item);
     item->isSelected();
+}
+
+void MainWindow::updateFrameCount()
+{
+    totalFrames = frameModel.getTotalFrames();
+    currentFrame = frameModel.getCurrentFrame();
+    ui->frameCount->setText(QString::number(currentFrame) + "/" + QString::number(totalFrames));
 }

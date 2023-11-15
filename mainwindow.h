@@ -36,6 +36,7 @@ public:
     MainWindow(FrameModel& frameModel, QWidget *parent = nullptr);
     ~MainWindow();
 
+
 signals:
     /**
      * @brief colorChanged - signals the model that the color has changed.
@@ -48,6 +49,10 @@ private:
     QStackedWidget* frameStack;
     FramePreview *framePreview;
 
+    FrameModel& frameModel;
+    int currentFrame;
+    int totalFrames;
+
     void styleSetup();
     void colorRangeSetup();
     /**
@@ -55,6 +60,7 @@ private:
      * @param frameModel
      */
     void toolsSetup(FrameModel& frameModel);
+    void updateFrameCount();
 };
 
 #endif // MAINWINDOW_H

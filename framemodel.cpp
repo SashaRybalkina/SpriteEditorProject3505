@@ -155,6 +155,12 @@ void FrameModel::saveFile()
 void FrameModel::openFile()
 {
     QStringList selectedFiles = QFileDialog::getOpenFileNames(new QWidget, tr("Open File"), "/path/to/file/", tr("JSON Files (*.ssp)"));
+    // Check if any file was selected
+    if (selectedFiles.isEmpty())
+    {
+        return; // No file was selected, so return early
+    }
+
     QFile file(selectedFiles.at(0));
     QString str;
     if(file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -268,4 +274,12 @@ void FrameModel::brushSizeChanged(int newSize)
     tools[currentToolIndex].setBrushSize(newSize);
     qDebug("Brush Size Changed");
     updateFrameProperties();
+}
+
+int FrameModel::getTotalFrames() const {
+    return frameStack->count();
+}
+
+int FrameModel::getCurrentFrame() const {
+    return frameStack->currentIndex() + 1;
 }
