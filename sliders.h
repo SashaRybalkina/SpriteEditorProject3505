@@ -1,3 +1,9 @@
+/*
+ * Sasha Rybalkina u1362376
+ * CS 3505
+ * A8: Sprite Editor Implementation
+ */
+
 #ifndef SLIDERS_H
 #define SLIDERS_H
 
