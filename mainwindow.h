@@ -7,9 +7,15 @@
 #include "Sliders.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui
+{
+    class MainWindow;
+}
 QT_END_NAMESPACE
 
+/**
+ * @brief The MainWindow class - The main screen that everything is on
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -36,40 +42,40 @@ private slots:
     void updateColorSliders(int red, int green, int blue, int alpha);
 
     /**
-     * @brief addPenClicked - Adds another pen tool to the tools list.
+     * @brief addPenClicked - Adds another pen tool to the tools list
      */
     void addPenClicked();
 
     /**
-     * @brief handleOpen - Updates ui when a new document is opened.
+     * @brief handleOpen - Updates ui when a new document is opened
      */
     void handleOpen();
 
 private:
-    Ui::MainWindow* ui;
-    QStackedWidget* frameStack;
-    FramePreview* framePreview;
+    Ui::MainWindow *ui;
+    QStackedWidget *frameStack;
+    FramePreview *framePreview;
 
-    FrameModel& frameModel;
-    Sliders* sliders;
+    FrameModel &frameModel;
+    Sliders *sliders;
     int currentFrame;
     int totalFrames;
 
     /**
-     * @brief styleSetup - Initializes the style components and stylesheets in the MainWindow.
+     * @brief styleSetup - Initializes the style components and stylesheets in the MainWindow
      */
     void styleSetup();
 
     /**
-     * @brief colorSetup - Initializes color components and connections in the MainWindow.
+     * @brief colorSetup - Initializes color components and connections in the MainWindow
      */
     void colorSetup();
 
     /**
-     * @brief toolsSetup - Helper method to segment out connect calls for tool functionality.
+     * @brief toolsSetup - Helper method to segment out connect calls for tool functionality
      * @param frameModel - An object with frames
      */
-    void toolsSetup(FrameModel& frameModel);
+    void toolsSetup(FrameModel &frameModel);
 
     /**
      * @brief updateFrameCount - Changes the frameCount label
@@ -82,7 +88,7 @@ public:
      * @param frameModel - Object with frames
      * @param parent - Parent widget
      */
-    MainWindow(FrameModel& frameModel, QWidget *parent = nullptr);
+    MainWindow(FrameModel &frameModel, QWidget *parent = nullptr);
     ~MainWindow();
 
 public slots:
@@ -94,10 +100,9 @@ public slots:
 
 signals:
     /**
-     * @brief colorChanged - Signals the model that the color has changed.
+     * @brief colorChanged - Signals the model that the color has changed
      * @param color - The new color value
      */
     void colorChanged(QColor color);
 };
-
 #endif // MAINWINDOW_H

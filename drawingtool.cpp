@@ -1,14 +1,11 @@
 #include "drawingtool.h"
 
-
-DrawingTool::DrawingTool(): DrawingTool(QColor("Black"))
+DrawingTool::DrawingTool() : DrawingTool(QColor("Black"))
 {
-
 }
 
 DrawingTool::DrawingTool(QColor color) : color_(color), brushSize(1)
 {
-
 }
 
 QColor DrawingTool::getToolColor()

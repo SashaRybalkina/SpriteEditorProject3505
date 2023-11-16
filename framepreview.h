@@ -11,15 +11,23 @@
 #include <QSpinBox>
 #include <QCheckBox>
 
-namespace Ui {
-class FramePreview;
+namespace Ui
+{
+    class FramePreview;
 }
 
+/**
+ * @brief The FramePreview class - Displays a preview of animated frames in the Sprite Editor
+ */
 class FramePreview : public QWidget
 {
     Q_OBJECT
 
 public:
+    /**
+     * @brief FramePreview - Constructor for the FramePreview class
+     * @param parent - The parent widget
+     */
     explicit FramePreview(QWidget *parent = nullptr);
     ~FramePreview();
 
@@ -28,7 +36,7 @@ public:
      * @param frameStack - The stack of frames
      * @param frameModel - The class that handles frames
      */
-    void populateFrameStackModel(QStackedWidget* frameStack, FrameModel* frameModel);
+    void populateFrameStackModel(QStackedWidget *frameStack, FrameModel *frameModel);
 
 private slots:
     /**
@@ -55,20 +63,20 @@ public slots:
 
 private:
     Ui::FramePreview *ui;
-    FrameModel* frameModel;
+    FrameModel *frameModel;
     QTimer timer;
-    QStackedWidget* frameStack;
-    QGraphicsScene* scene;
+    QStackedWidget *frameStack;
+    QGraphicsScene *scene;
 
     int currentFrameIndex;
     int currentFPS = 12;
     bool isPlaying = false;
     bool atActualSize = false;
 
-    QPushButton* playPauseButton;
-    QSlider* fpsSlider;
-    QSpinBox* fpsBox;
-    QCheckBox* actualSizeBox;
+    QPushButton *playPauseButton;
+    QSlider *fpsSlider;
+    QSpinBox *fpsBox;
+    QCheckBox *actualSizeBox;
 
     /**
      * @brief updateAnimation - Manipulate the list of frames

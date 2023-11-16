@@ -5,6 +5,9 @@
 #include <iostream>
 #include "ui_mainwindow.h"
 
+/**
+ * @brief The Sliders class - Handles updating UI sliders and input fields
+ */
 class Sliders : public QObject
 {
     Q_OBJECT

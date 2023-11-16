@@ -3,10 +3,9 @@
 #include "ui_framepreview.h"
 #include <QPixmap>
 
-FramePreview::FramePreview(QWidget* parent) :
-    QWidget(parent),
-    ui(new Ui::FramePreview),
-    currentFrameIndex(0)
+FramePreview::FramePreview(QWidget *parent) : QWidget(parent),
+                                              ui(new Ui::FramePreview),
+                                              currentFrameIndex(0)
 {
     ui->setupUi(this);
 
@@ -27,43 +26,46 @@ FramePreview::FramePreview(QWidget* parent) :
     connect(fpsBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &FramePreview::changeFPS);
     connect(actualSizeBox, &QCheckBox::stateChanged, this, &FramePreview::toggleActualSize);
 
-    connect(ui -> hideButton, &QPushButton::clicked, this, &FramePreview::hideFramePreview);
+    connect(ui->hideButton, &QPushButton::clicked, this, &FramePreview::hideFramePreview);
 
     connect(&timer, &QTimer::timeout, this, &FramePreview::updateAnimation);
     timer.setInterval(1000 / currentFPS);
 
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
-
-//    updateCurrentFrame();
 }
 
 FramePreview::~FramePreview()
 {
     delete ui;
-    if (timer.isActive()) {
+    if (timer.isActive())
+    {
         timer.stop();
     }
 }
 
-void FramePreview::populateFrameStackModel(QStackedWidget* frameStack, FrameModel* frameModel){
-    this -> frameStack = frameStack;
-    this -> frameModel = frameModel;
+void FramePreview::populateFrameStackModel(QStackedWidget *frameStack, FrameModel *frameModel)
+{
+    this->frameStack = frameStack;
+    this->frameModel = frameModel;
 }
 
-void FramePreview::togglePlayPause() {
+void FramePreview::togglePlayPause()
+{
     isPlaying = !isPlaying;
 
-    if (isPlaying) {
+    if (isPlaying)
+    {
         playPauseButton->setText("Pause");
-        if (!timer.isActive()) {
+        if (!timer.isActive())
+        {
             timer.start(1000 / currentFPS);
-            qDebug() << "played";
         }
-    } else {
+    }
+    else
+    {
         playPauseButton->setText("Play");
         timer.stop();
-        qDebug() << "paused";
     }
 }
 
@@ -72,51 +74,38 @@ void FramePreview::changeFPS(int fps)
     currentFPS = fps;
     timer.setInterval(1000 / currentFPS);
     fpsBox->setValue(fps);
-    qDebug() << "fps changed to" << fps;
 }
 
 void FramePreview::toggleActualSize()
 {
     atActualSize = actualSizeBox->isChecked();
     updateCurrentFrame();
-    qDebug() << "actualsize clicked";
 }
 
 void FramePreview::updateAnimation()
 {
-    qDebug() << "updateAnimation called";
-    qDebug() << "currentFrameIndex: " << currentFrameIndex;
-
-    if (frameStack) {
-        qDebug() << "frameStack count: " << frameStack->count();
-        currentFrameIndex = (currentFrameIndex + 1) % frameStack->count();
-        updateCurrentFrame();
-        qDebug() << "animation updated";
-
-    } else {
-        qDebug() << "framestack null";
-    }
+    currentFrameIndex = (currentFrameIndex + 1) % frameStack->count();
+    updateCurrentFrame();
 }
 
 void FramePreview::updateCurrentFrame()
 {
     QImage frame = frameModel->getImageAt(currentFrameIndex);
 
-    if (!frame.isNull()) {
-        qDebug() << "frame not null";
-
+    if (!frame.isNull())
+    {
         QPixmap framePixmap;
 
-        if (atActualSize) {
-            qDebug() << "actual size true";
+        if (atActualSize)
+        {
             framePixmap = QPixmap::fromImage(frame);
-        }else {
-            qDebug() << "actual size false";
+        }
+        else
+        {
             framePixmap = QPixmap::fromImage(frame.scaled(
                 ui->graphicsView->width(),
                 ui->graphicsView->height(),
-                Qt::KeepAspectRatio
-                ));
+                Qt::KeepAspectRatio));
         }
         scene->clear();
         scene->addPixmap(framePixmap);
@@ -125,8 +114,5 @@ void FramePreview::updateCurrentFrame()
 
 void FramePreview::hideFramePreview()
 {
-    qDebug() << "hide called";
-
     this->hide();
 }
-

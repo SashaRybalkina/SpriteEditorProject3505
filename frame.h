@@ -6,6 +6,9 @@
 #include <QWidget>
 #include "drawingtool.h"
 
+/**
+ * @brief The Frame class - Represents a frame for drawing in the Sprite Editor
+ */
 class Frame : public QWidget
 {
     Q_OBJECT
@@ -17,7 +20,7 @@ public:
      * @param backgroundColor - Color of the background
      * @param tool - A tool object
      */
-    Frame(int size = 4, QColor backgroundColor = Qt::blue, DrawingTool* tool = nullptr);
+    Frame(int size = 4, QColor backgroundColor = Qt::blue, DrawingTool *tool = nullptr);
 
     /**
      * @brief createImage - Creates a frame default filled in
@@ -46,7 +49,7 @@ public:
      * @brief changeTool - Chages the current tool
      * @param newTool - The new tool
      */
-    void changeTool(DrawingTool* newTool);
+    void changeTool(DrawingTool *newTool);
 
 public slots:
 
@@ -93,7 +96,7 @@ private:
     // QPoint lastPoint;
     int image_size;
     QColor backgroundColor;
-    DrawingTool* tool;
+    DrawingTool *tool;
 
     /**
      * @brief getPixelLocationFromMousePosition - Getter for pixel location based on mouse position
@@ -102,5 +105,4 @@ private:
      */
     QPoint getPixelLocationFromMousePosition(const QPoint &Point);
 };
-
 #endif // FRAME_H

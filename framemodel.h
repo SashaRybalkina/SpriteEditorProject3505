@@ -6,6 +6,9 @@
 #include <QStackedWidget>
 #include "drawingtool.h"
 
+/**
+ * @brief The FrameModel class - Manages frames in the Sprite Editor and handles user interactions
+ */
 class FrameModel : public QObject
 {
     Q_OBJECT
@@ -21,7 +24,7 @@ public:
      * @brief attachStackWidget - Gets the stack from the UI
      * @param frameStackWidget - Created in Designer
      */
-    void attachStackWidget(QStackedWidget* frameStackWidget);
+    void attachStackWidget(QStackedWidget *frameStackWidget);
 
     /**
      * @brief add_image - Creates new frame and pushes to the stack. Used upon startup, and by 'add' slots
@@ -143,7 +146,7 @@ signals:
     void updateBrushSize(int value);
 
 private:
-    QStackedWidget* frameStack;
+    QStackedWidget *frameStack;
     int size;
     QColor backgroundColor;
     QString fileName;
@@ -167,5 +170,4 @@ private:
      */
     QColor getBackgroundColorOfCurrentFrame();
 };
-
 #endif // FRAMEMODEL_H
