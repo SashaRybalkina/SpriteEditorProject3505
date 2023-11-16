@@ -23,14 +23,32 @@ public:
     explicit FramePreview(QWidget *parent = nullptr);
     ~FramePreview();
 
+    /**
+     * @brief populateFrameStackModel - Makes frameStack and frameModel usable in framePreview
+     * @param frameStack - The stack of frames
+     * @param frameModel - The class that handles frames
+     */
     void populateFrameStackModel(QStackedWidget* frameStack, FrameModel* frameModel);
 
 private slots:
+    /**
+     * @brief hideFramePreview - Hide the frame preview window
+     */
     void hideFramePreview();
 
 public slots:
+    /**
+     * @brief togglePlayPause - Play and pause the animation
+     */
     void togglePlayPause();
+    /**
+     * @brief changeFPS - Change frames per second of animation
+     * @param fps - The fps
+     */
     void changeFPS(int fps);
+    /**
+     * @brief toggleActualSize - Toggle between scaled size and actual size
+     */
     void toggleActualSize();
 
 private:
@@ -50,7 +68,13 @@ private:
     QSpinBox* fpsBox;
     QCheckBox* actualSizeBox;
 
+    /**
+     * @brief updateAnimation - Manipulate the list of frames
+     */
     void updateAnimation();
+    /**
+     * @brief updateCurrentFrame - Manipulate the current frame
+     */
     void updateCurrentFrame();
 };
 
