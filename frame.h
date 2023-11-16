@@ -1,3 +1,9 @@
+/*
+ * Brendon Gorleik u1403766
+ * CS 3505
+ * A8: Sprite Editor Implementation
+ */
+
 #ifndef FRAME_H
 #define FRAME_H
 

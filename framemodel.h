@@ -1,3 +1,9 @@
+/*
+ * Brendon Gorelik u1403766
+ * CS 3505
+ * A8: Sprite Editor Implementation
+ */
+
 #ifndef FRAMEMODEL_H
 #define FRAMEMODEL_H
 

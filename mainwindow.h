@@ -1,3 +1,9 @@
+/*
+ * Reviewed by all
+ * CS 3505
+ * A8: Sprite Editor Implementation
+ */
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

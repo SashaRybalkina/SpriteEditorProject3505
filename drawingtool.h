@@ -1,3 +1,9 @@
+/*
+ * Michael Ekstorm u1170312
+ * CS 3505
+ * A8: Sprite Editor Implementation
+ */
+
 #ifndef DRAWINGTOOL_H
 #define DRAWINGTOOL_H
 
