@@ -15,20 +15,16 @@ FramePreview::FramePreview(QWidget *parent)
     fpsBox = ui->fpsBox;
     actualSizeBox = ui->actualSize;
 
-    // sets min, max, and default of slider and spin box
-    fpsSlider->setMinimum(1);
-    fpsSlider->setMaximum(60);
+    // sets default slider and spin box
     fpsSlider->setValue(currentFPS);
-    fpsBox->setMinimum(1);
-    fpsBox->setMaximum(60);
     fpsBox->setValue(currentFPS);
 
     // connects buttons for frame playback functionality
     connect(ui->playPause, &QPushButton::clicked, this, &FramePreview::togglePlayPause);
     connect(fpsSlider, &QSlider::valueChanged, fpsBox, &QSpinBox::setValue);
     connect(fpsBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &FramePreview::changeFPS);
+    connect(fpsBox, QOverload<int>::of(&QSpinBox::valueChanged), fpsSlider, &QSlider::setValue);
     connect(actualSizeBox, &QCheckBox::stateChanged, this, &FramePreview::toggleActualSize);
-
     connect(ui->hideButton, &QPushButton::clicked, this, &FramePreview::hideFramePreview);
 
     // manages speed of animation
