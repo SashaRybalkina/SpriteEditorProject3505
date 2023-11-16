@@ -10,11 +10,12 @@ class DrawingTool
 {
 public:
     /**
-     * @brief DrawingTool - default bahvior sets color to black
+     * @brief DrawingTool - Default behavior sets color to black
      */
     DrawingTool();
+
     /**
-     * @brief DrawingTool
+     * @brief DrawingTool - Initializes colors
      * @param red - [0-255] red color component
      * @param green - [0-255] green color component
      * @param blue - [0-255] blue color component
@@ -23,52 +24,50 @@ public:
     DrawingTool(int red, int green, int blue, int alpha);
 
     /**
-     * @brief DrawingTool
-     * @param color
+     * @brief DrawingTool - Initializes colors
+     * @param color - Color for the tool
      */
     DrawingTool(QColor color);
 
     /**
-     * @brief getToolColor
-     * @return
+     * @brief getToolColor - Getter for tool color
+     * @return Color of tool
      */
     QColor getToolColor();
 
     /**
-     * @brief setToolColor
-     * @param color
+     * @brief setToolColor - Setter for tool color
+     * @param color - Color to set
      */
     void setToolColor(QColor color);
 
     /**
-     * @brief getColor - returns the current brush color
-     * @return
+     * @brief getColor - Getter for current brush color
+     * @return The current brush color
      */
     QColor getColor();
 
     /**
-     * @brief setBrushSize - sets the brush size
-     * @param size
+     * @brief setBrushSize - Setter for the brush size
+     * @param size - Size of the brush to set
      */
     void setBrushSize(int size);
 
     /**
-     * @brief getBrushSize - returns the current brush size
-     * @return
+     * @brief getBrushSize - Getter for brush size
+     * @return Size of brush
      */
     int getBrushSize();
 
 private:
     /**
-     * @brief color_ - stores the current brush color
+     * @brief color_ - Stores the current brush color
      */
     QColor color_;
 
     /**
-     * @brief brushSize - stores the current brush size.
+     * @brief brushSize - Stores the current brush size
      */
     int brushSize;
-
 };
-
 #endif // DRAWINGTOOL_H

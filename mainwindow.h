@@ -16,28 +16,32 @@ class MainWindow : public QMainWindow
 
 private slots:
     /**
-     * @brief showFramePreview
+     * @brief showFramePreview - Shows the frame preview widget
      */
     void showFramePreview();
 
     /**
-     * @brief colorSlidersChanged - changes the model when the sliders change
+     * @brief colorSlidersChanged - Changes the model when the sliders change
      * @param value
      */
     void colorSlidersChanged(int);
 
     /**
-     *  @brief Updates the color sliders from the model when the tool changes
+     * @brief updateColorSliders - Updates the color sliders from the model when the tool changes
+     * @param red - Red value
+     * @param green - Green value
+     * @param blue - Blue value
+     * @param alpha - Opacity value
      */
     void updateColorSliders(int red, int green, int blue, int alpha);
 
     /**
-     * @brief addPenClicked - adds another pen tool to the tools list.
+     * @brief addPenClicked - Adds another pen tool to the tools list.
      */
     void addPenClicked();
 
     /**
-     * @brief handleOpen - updates ui when a new document is opened.
+     * @brief handleOpen - Updates ui when a new document is opened.
      */
     void handleOpen();
 
@@ -51,26 +55,47 @@ private:
     int currentFrame;
     int totalFrames;
 
-    void styleSetup();
-    void colorSetup();
     /**
-     * @brief toolsSetup Helper method to segment out connect calls for tool functionality.
-     * @param frameModel
+     * @brief styleSetup - Initializes the style components and stylesheets in the MainWindow.
+     */
+    void styleSetup();
+
+    /**
+     * @brief colorSetup - Initializes color components and connections in the MainWindow.
+     */
+    void colorSetup();
+
+    /**
+     * @brief toolsSetup - Helper method to segment out connect calls for tool functionality.
+     * @param frameModel - An object with frames
      */
     void toolsSetup(FrameModel& frameModel);
+
+    /**
+     * @brief updateFrameCount - Changes the frameCount label
+     */
     void updateFrameCount();
 
 public:
+    /**
+     * @brief MainWindow - Initializes the main window
+     * @param frameModel - Object with frames
+     * @param parent - Parent widget
+     */
     MainWindow(FrameModel& frameModel, QWidget *parent = nullptr);
     ~MainWindow();
 
 public slots:
+    /**
+     * @brief updateBrushSpinBox - Updates the brush spin box value
+     * @param value - New value for the brush spin box
+     */
     void updateBrushSpinBox(int value);
 
 signals:
     /**
-     * @brief colorChanged - signals the model that the color has changed.
-     * @param color
+     * @brief colorChanged - Signals the model that the color has changed.
+     * @param color - The new color value
      */
     void colorChanged(QColor color);
 };

@@ -41,11 +41,13 @@ public slots:
      * @brief togglePlayPause - Play and pause the animation
      */
     void togglePlayPause();
+
     /**
      * @brief changeFPS - Change frames per second of animation
      * @param fps - The fps
      */
     void changeFPS(int fps);
+
     /**
      * @brief toggleActualSize - Toggle between scaled size and actual size
      */
@@ -72,10 +74,10 @@ private:
      * @brief updateAnimation - Manipulate the list of frames
      */
     void updateAnimation();
+
     /**
      * @brief updateCurrentFrame - Manipulate the current frame
      */
     void updateCurrentFrame();
 };
-
 #endif // FRAMEPREVIEW_H

@@ -13,27 +13,39 @@ public:
     QImage image;
     /**
      * @brief Frame data structure for Widget that holds image as internal strucutre and paints it onto itself
-     * @param parent widgets parent
-     * @param size pixel dimension for underlying image
+     * @param size - Pixel dimension for underlying image
+     * @param backgroundColor - Color of the background
+     * @param tool - A tool object
      */
     Frame(int size = 4, QColor backgroundColor = Qt::blue, DrawingTool* tool = nullptr);
 
     /**
-     * @brief createImage creates a frame default filled in
+     * @brief createImage - Creates a frame default filled in
      */
     void createImage();
+
     // bool saveImage(const QString &fileName, const char *fileFormat);
-
     // void setPenWidth(int newWidth);
-
     // bool isModified() const { return modified; }
-//    QColor penColor() const { return myPenColor; }
+    //    QColor penColor() const { return myPenColor; }
     // int penWidth() const { return myPenWidth; }
 
+    /**
+     * @brief getImage - Getter for image
+     * @return The image
+     */
     QImage getImage() const { return image; }
 
+    /**
+     * @brief getBackgroundColor - Getter for background color
+     * @return The background color
+     */
     QColor getBackgroundColor();
 
+    /**
+     * @brief changeTool - Chages the current tool
+     * @param newTool - The new tool
+     */
     void changeTool(DrawingTool* newTool);
 
 public slots:
@@ -42,27 +54,35 @@ signals:
 
 protected:
     /**
-     * @brief mousePressEvent adjusts the undelrying image with new color at the location pressed and paints it
-     * @param event
+     * @brief mousePressEvent - Adjusts the undelrying image with new color at the location pressed and paints it
+     * @param event - The mouse event
      */
     void mousePressEvent(QMouseEvent *event) override;
+
     /**
-     * @brief mouseMoveEvent adjusts the undelrying image with new color at the location moved over and paints it
-     * @param event
+     * @brief mouseMoveEvent - Adjusts the undelrying image with new color at the location moved over and paints it
+     * @param event - The mouse event
      */
     void mouseMoveEvent(QMouseEvent *event) override;
+
     /**
-     * @brief mouseReleaseEvent stops adjusting image and painting changes
-     * @param event
+     * @brief mouseReleaseEvent - Stops adjusting image and painting changes
+     * @param event - The mouse event
      */
     void mouseReleaseEvent(QMouseEvent *event) override;
+
     /**
-     * @brief paintEvent triggger by update to scale image and display it on frame widget
-     * @param event
+     * @brief paintEvent - Trigger by update to scale image and display it on frame widget
+     * @param event - The paint event
      */
     void paintEvent(QPaintEvent *event) override;
+
     // void resizeEvent(QResizeEvent *event) override;
 
+    /**
+     * @brief fill - Fills a point
+     * @param point - Point to fill
+     */
     void fill(const QPoint &point);
 
 private:
@@ -75,6 +95,11 @@ private:
     QColor backgroundColor;
     DrawingTool* tool;
 
+    /**
+     * @brief getPixelLocationFromMousePosition - Getter for pixel location based on mouse position
+     * @param Point - Location of mouse
+     * @return Location of pixel
+     */
     QPoint getPixelLocationFromMousePosition(const QPoint &Point);
 };
 
