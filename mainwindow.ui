@@ -347,7 +347,7 @@
      </property>
     </item>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="frameSizeLabel">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -491,7 +491,7 @@
      <number>1</number>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="brushSizeLabel">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -504,7 +504,7 @@
      <string>Brush Size</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="backgroundColorLabel">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -524,7 +524,7 @@
      <x>0</x>
      <y>0</y>
      <width>1041</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
