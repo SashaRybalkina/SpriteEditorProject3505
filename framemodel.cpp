@@ -128,7 +128,7 @@ void FrameModel::saveFile()
         for (int y = 0; y < dynamic_cast<Frame*>(frameStack->widget(f))->getImage().height(); y++) {
             for (int x = 0; x < dynamic_cast<Frame*>(frameStack->widget(f))->getImage().width(); x++) {
                 QJsonObject pixel;
-                QColor currentColor(dynamic_cast<Frame*>(frameStack->widget(f))->getImage().pixel(x, y));
+                QColor currentColor(dynamic_cast<Frame*>(frameStack->widget(f))->getImage().pixelColor(x, y));
                 pixel.insert("a", currentColor.alpha());
                 pixel.insert("b", currentColor.blue());
                 pixel.insert("g", currentColor.green());
@@ -198,7 +198,7 @@ void FrameModel::openFile()
                     int red = pixelValues[3].toInt();
                     int green = pixelValues[2].toInt();
                     int blue = pixelValues[1].toInt();
-                    int alpha = pixelValues[0].toDouble();
+                    int alpha = pixelValues[0].toInt();
                     QColor color = QColor(red, green, blue, alpha);
                     dynamic_cast<Frame*>(frameStack->widget(index-1))->image.setPixelColor(x, y, color);
                 }
