@@ -23,44 +23,6 @@ class FramePreview : public QWidget
 {
     Q_OBJECT
 
-public:
-    /**
-     * @brief FramePreview - Constructor for the FramePreview class
-     * @param parent - The parent widget
-     */
-    explicit FramePreview(QWidget *parent = nullptr);
-    ~FramePreview();
-
-    /**
-     * @brief populateFrameStackModel - Makes frameStack and frameModel usable in framePreview
-     * @param frameStack - The stack of frames
-     * @param frameModel - The class that handles frames
-     */
-    void populateFrameStackModel(QStackedWidget *frameStack, FrameModel *frameModel);
-
-private slots:
-    /**
-     * @brief hideFramePreview - Hide the frame preview window
-     */
-    void hideFramePreview();
-
-public slots:
-    /**
-     * @brief togglePlayPause - Play and pause the animation
-     */
-    void togglePlayPause();
-
-    /**
-     * @brief changeFPS - Change frames per second of animation
-     * @param fps - The fps
-     */
-    void changeFPS(int fps);
-
-    /**
-     * @brief toggleActualSize - Toggle between scaled size and actual size
-     */
-    void toggleActualSize();
-
 private:
     Ui::FramePreview *ui;
     FrameModel *frameModel;
@@ -87,5 +49,47 @@ private:
      * @brief updateCurrentFrame - Manipulate the current frame
      */
     void updateCurrentFrame();
+
+private slots:
+    /**
+     * @brief hideFramePreview - Hide the frame preview window
+     */
+    void hideFramePreview();
+
+public:
+    /**
+     * @brief FramePreview - Constructor for the FramePreview class
+     * @param parent - The parent widget
+     */
+    explicit FramePreview(QWidget *parent = nullptr);
+
+    /**
+     * Destructor
+     */
+    ~FramePreview();
+
+    /**
+     * @brief populateFrameStackModel - Makes frameStack and frameModel usable in framePreview
+     * @param frameStack - The stack of frames
+     * @param frameModel - The class that handles frames
+     */
+    void populateFrameStackModel(QStackedWidget *frameStack, FrameModel *frameModel);
+
+public slots:
+    /**
+     * @brief togglePlayPause - Play and pause the animation
+     */
+    void togglePlayPause();
+
+    /**
+     * @brief changeFPS - Change frames per second of animation
+     * @param fps - The fps
+     */
+    void changeFPS(int fps);
+
+    /**
+     * @brief toggleActualSize - Toggle between scaled size and actual size
+     */
+    void toggleActualSize();
 };
 #endif // FRAMEPREVIEW_H

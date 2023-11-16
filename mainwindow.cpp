@@ -3,7 +3,12 @@
 #include "FrameModel.h"
 #include <QHBoxLayout>
 
-MainWindow::MainWindow(FrameModel &frameModel, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), frameModel(frameModel), currentFrame(0), totalFrames(0)
+MainWindow::MainWindow(FrameModel &frameModel, QWidget *parent)
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow),
+      frameModel(frameModel),
+      currentFrame(0),
+      totalFrames(0)
 {
     ui->setupUi(this);
 
@@ -25,6 +30,7 @@ MainWindow::MainWindow(FrameModel &frameModel, QWidget *parent) : QMainWindow(pa
 
     // Connects UI to model for updating frame size
     connect(ui->sizeComboBox, &QComboBox::currentTextChanged, &frameModel, &FrameModel::sizeChanged);
+
     // Connect model to UI for changing back frame size if user picks no during warning
     connect(&frameModel, &FrameModel::changeSizeComboBox, ui->sizeComboBox, &QComboBox::setCurrentText);
 
@@ -127,7 +133,6 @@ void MainWindow::toolsSetup(FrameModel &frameModel)
     connect(ui->opacitySlider, &QSlider::valueChanged, this, &MainWindow::colorSlidersChanged);
 
     connect(this, &MainWindow::colorChanged, &frameModel, &FrameModel::colorChanged);
-
     connect(&frameModel, &FrameModel::changeColorSliders, this, &MainWindow::updateColorSliders);
 
     // Connects UI to model for updating when the selected tool is changed
@@ -151,8 +156,8 @@ void MainWindow::addPenClicked()
 
 void MainWindow::updateFrameCount()
 {
-    totalFrames = frameModel.getTotalFrames();
-    currentFrame = frameModel.getCurrentFrame();
+    this->totalFrames = frameModel.getTotalFrames();
+    this->currentFrame = frameModel.getCurrentFrame();
     ui->frameCount->setText(QString::number(currentFrame) + "/" + QString::number(totalFrames));
 }
 

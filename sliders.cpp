@@ -1,8 +1,9 @@
-#include "Sliders.h"
-#include "mainwindow.h"
+#include "sliders.h"
 #include "ui_mainwindow.h"
 
-Sliders::Sliders(Ui::MainWindow *ui, QObject *parent) : QObject{parent}, ui(ui)
+Sliders::Sliders(Ui::MainWindow *ui, QObject *parent)
+    : QObject{parent},
+      ui(ui)
 {
 }
 

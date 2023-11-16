@@ -9,21 +9,21 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Sliders.cpp \
     drawingtool.cpp \
     frame.cpp \
     framemodel.cpp \
     framepreview.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    sliders.cpp
 
 HEADERS += \
-    Sliders.h \
     drawingtool.h \
     frame.h \
     framemodel.h \
     framepreview.h \
-    mainwindow.h
+    mainwindow.h \
+    sliders.h
 
 FORMS += \
     framepreview.ui \

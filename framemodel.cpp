@@ -12,7 +12,12 @@
 #include <QJsonArray>
 #include <QFileDialog>
 
-FrameModel::FrameModel(QObject *parent) : QObject(parent), size(4), backgroundColor(Qt::blue), tools(), currentToolIndex(0)
+FrameModel::FrameModel(QObject *parent)
+    : QObject(parent),
+      size(4),
+      backgroundColor(Qt::blue),
+      tools(),
+      currentToolIndex(0)
 {
     tools.push_back(DrawingTool(QColor(backgroundColor))); // Add eraser
     addPen();
@@ -21,12 +26,12 @@ FrameModel::FrameModel(QObject *parent) : QObject(parent), size(4), backgroundCo
 void FrameModel::attachStackWidget(QStackedWidget *frameStackWidget)
 {
     this->frameStack = frameStackWidget;
-    this->add_image();
+    addImage();
 }
 
-void FrameModel::add_image()
+void FrameModel::addImage()
 {
-    Frame *frame = new Frame(this->size, backgroundColor, &tools[currentToolIndex]);
+    Frame *frame = new Frame(size, backgroundColor, &tools[currentToolIndex]);
     frameStack->addWidget(frame);
 }
 
@@ -41,7 +46,7 @@ QImage FrameModel::getImageAt(int index)
 
 void FrameModel::addFrame()
 {
-    this->add_image();
+    addImage();
 }
 
 void FrameModel::deleteFrame()
@@ -81,10 +86,10 @@ void FrameModel::priorFrame()
     updateFrameProperties();
 }
 
-void FrameModel::sizeChanged(QString size_)
+void FrameModel::sizeChanged(QString size)
 {
-    this->size = size_.toInt();
-    this->addFrame();
+    this->size = size.toInt();
+    addFrame();
     while (frameStack->count() > 1)
     {
         QWidget *widget = frameStack->widget(0); // Get the first widget
@@ -170,7 +175,7 @@ void FrameModel::openFile()
                 int index = stringIndex.toInt();
                 while (index > frameStack->count())
                 {
-                    add_image();
+                    addImage();
                 }
                 QJsonObject frame = json.value(jsonObject).toObject();
                 foreach (const QString &pixelKey, frame.keys())
@@ -203,14 +208,6 @@ void FrameModel::openFile()
 void FrameModel::toolChanged(int currentRow)
 {
     currentToolIndex = currentRow;
-
-    switch (currentToolIndex)
-    {
-    case 0:
-        break;
-    default:
-        break;
-    }
     updateFrameProperties();
     updateSliders();
 }
@@ -252,7 +249,7 @@ QColor FrameModel::getBackgroundColorOfCurrentFrame()
 
 void FrameModel::addPen()
 {
-    tools.push_back(DrawingTool(Qt::black));
+    tools.push_back(DrawingTool());
 }
 
 void FrameModel::brushSizeChanged(int newSize)

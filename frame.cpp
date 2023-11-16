@@ -14,14 +14,14 @@ Frame::Frame(int size, QColor backgroundColor, DrawingTool *currentTool)
 {
     setAttribute(Qt::WA_StaticContents);
     this->tool = currentTool;
-    this->image_size = size;
+    this->imageSize = size;
     this->backgroundColor = backgroundColor;
-    this->createImage();
+    createImage();
 }
 
 void Frame::createImage()
 {
-    image = QImage(image_size, image_size, QImage::Format_ARGB32);
+    image = QImage(imageSize, imageSize, QImage::Format_ARGB32);
     image.fill(backgroundColor);
     update();
 }
@@ -68,7 +68,6 @@ void Frame::fill(const QPoint &point)
             image.setPixelColor(x, y, tool->getToolColor());
         }
     }
-
     update();
 }
 
@@ -87,11 +86,10 @@ QPoint Frame::getPixelLocationFromMousePosition(const QPoint &point)
     // 0, 0 top left
     int x = point.x();
     int y = point.y();
-    QSize widget_size = size();
-    int x_len = widget_size.rwidth();
-    int y_len = widget_size.rheight(); // Should be same as x
-    double pixel_size = (double)x_len / image_size;
-    int image_x = (int)(x / pixel_size);
-    int image_y = (int)(y / pixel_size);
-    return QPoint(image_x, image_y);
+    QSize widgetSize = size();
+    int xLen = widgetSize.rwidth();
+    double pixelSize = (double)xLen / imageSize;
+    int imageX = (int)(x / pixelSize);
+    int imageY = (int)(y / pixelSize);
+    return QPoint(imageX, imageY);
 }

@@ -3,9 +3,10 @@
 #include "ui_framepreview.h"
 #include <QPixmap>
 
-FramePreview::FramePreview(QWidget *parent) : QWidget(parent),
-                                              ui(new Ui::FramePreview),
-                                              currentFrameIndex(0)
+FramePreview::FramePreview(QWidget *parent)
+    : QWidget(parent),
+      ui(new Ui::FramePreview),
+      currentFrameIndex(0)
 {
     ui->setupUi(this);
 
@@ -14,6 +15,7 @@ FramePreview::FramePreview(QWidget *parent) : QWidget(parent),
     fpsBox = ui->fpsBox;
     actualSizeBox = ui->actualSize;
 
+    // sets min, max, and default of slider and spin box
     fpsSlider->setMinimum(1);
     fpsSlider->setMaximum(60);
     fpsSlider->setValue(currentFPS);
@@ -21,6 +23,7 @@ FramePreview::FramePreview(QWidget *parent) : QWidget(parent),
     fpsBox->setMaximum(60);
     fpsBox->setValue(currentFPS);
 
+    // connects buttons for frame playback functionality
     connect(ui->playPause, &QPushButton::clicked, this, &FramePreview::togglePlayPause);
     connect(fpsSlider, &QSlider::valueChanged, fpsBox, &QSpinBox::setValue);
     connect(fpsBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &FramePreview::changeFPS);
@@ -28,6 +31,7 @@ FramePreview::FramePreview(QWidget *parent) : QWidget(parent),
 
     connect(ui->hideButton, &QPushButton::clicked, this, &FramePreview::hideFramePreview);
 
+    // manages speed of animation
     connect(&timer, &QTimer::timeout, this, &FramePreview::updateAnimation);
     timer.setInterval(1000 / currentFPS);
 
@@ -52,7 +56,7 @@ void FramePreview::populateFrameStackModel(QStackedWidget *frameStack, FrameMode
 
 void FramePreview::togglePlayPause()
 {
-    isPlaying = !isPlaying;
+    this->isPlaying = !isPlaying;
 
     if (isPlaying)
     {
@@ -71,20 +75,20 @@ void FramePreview::togglePlayPause()
 
 void FramePreview::changeFPS(int fps)
 {
-    currentFPS = fps;
+    this->currentFPS = fps;
     timer.setInterval(1000 / currentFPS);
     fpsBox->setValue(fps);
 }
 
 void FramePreview::toggleActualSize()
 {
-    atActualSize = actualSizeBox->isChecked();
+    this->atActualSize = actualSizeBox->isChecked();
     updateCurrentFrame();
 }
 
 void FramePreview::updateAnimation()
 {
-    currentFrameIndex = (currentFrameIndex + 1) % frameStack->count();
+    this->currentFrameIndex = (currentFrameIndex + 1) % frameStack->count();
     updateCurrentFrame();
 }
 
@@ -114,5 +118,5 @@ void FramePreview::updateCurrentFrame()
 
 void FramePreview::hideFramePreview()
 {
-    this->hide();
+    hide();
 }

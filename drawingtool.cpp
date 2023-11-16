@@ -4,18 +4,20 @@ DrawingTool::DrawingTool() : DrawingTool(QColor("Black"))
 {
 }
 
-DrawingTool::DrawingTool(QColor color) : color_(color), brushSize(1)
+DrawingTool::DrawingTool(QColor color)
+    : brushColor(color),
+      brushSize(1)
 {
 }
 
 QColor DrawingTool::getToolColor()
 {
-    return color_;
+    return brushColor;
 }
 
 void DrawingTool::setToolColor(QColor color)
 {
-    color_ = color;
+    this->brushColor = color;
 }
 
 void DrawingTool::setBrushSize(int size)

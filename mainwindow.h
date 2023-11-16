@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "FrameModel.h"
 #include "framepreview.h"
-#include "Sliders.h"
+#include "sliders.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -19,6 +19,37 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+private:
+    Ui::MainWindow *ui;
+    QStackedWidget *frameStack;
+    FramePreview *framePreview;
+    FrameModel &frameModel;
+    Sliders *sliders;
+
+    int currentFrame;
+    int totalFrames;
+
+    /**
+     * @brief styleSetup - Initializes the style components and stylesheets in the MainWindow
+     */
+    void styleSetup();
+
+    /**
+     * @brief colorSetup - Initializes color components and connections in the MainWindow
+     */
+    void colorSetup();
+
+    /**
+     * @brief toolsSetup - Helper method to segment out connect calls for tool functionality
+     * @param frameModel - An object with frames
+     */
+    void toolsSetup(FrameModel &frameModel);
+
+    /**
+     * @brief updateFrameCount - Changes the frameCount label
+     */
+    void updateFrameCount();
 
 private slots:
     /**
@@ -51,37 +82,6 @@ private slots:
      */
     void handleOpen();
 
-private:
-    Ui::MainWindow *ui;
-    QStackedWidget *frameStack;
-    FramePreview *framePreview;
-
-    FrameModel &frameModel;
-    Sliders *sliders;
-    int currentFrame;
-    int totalFrames;
-
-    /**
-     * @brief styleSetup - Initializes the style components and stylesheets in the MainWindow
-     */
-    void styleSetup();
-
-    /**
-     * @brief colorSetup - Initializes color components and connections in the MainWindow
-     */
-    void colorSetup();
-
-    /**
-     * @brief toolsSetup - Helper method to segment out connect calls for tool functionality
-     * @param frameModel - An object with frames
-     */
-    void toolsSetup(FrameModel &frameModel);
-
-    /**
-     * @brief updateFrameCount - Changes the frameCount label
-     */
-    void updateFrameCount();
-
 public:
     /**
      * @brief MainWindow - Initializes the main window
@@ -89,6 +89,10 @@ public:
      * @param parent - Parent widget
      */
     MainWindow(FrameModel &frameModel, QWidget *parent = nullptr);
+
+    /**
+     * Destructor
+     */
     ~MainWindow();
 
 public slots:

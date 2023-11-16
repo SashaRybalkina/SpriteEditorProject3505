@@ -8,6 +8,10 @@
  */
 class DrawingTool
 {
+private:
+    QColor brushColor;
+    int brushSize;
+
 public:
     /**
      * @brief DrawingTool - Default behavior sets color to black
@@ -58,16 +62,5 @@ public:
      * @return Size of brush
      */
     int getBrushSize();
-
-private:
-    /**
-     * @brief color_ - Stores the current brush color
-     */
-    QColor color_;
-
-    /**
-     * @brief brushSize - Stores the current brush size
-     */
-    int brushSize;
 };
 #endif // DRAWINGTOOL_H

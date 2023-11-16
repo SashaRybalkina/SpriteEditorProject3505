@@ -13,6 +13,31 @@ class FrameModel : public QObject
 {
     Q_OBJECT
 
+private:
+    QStackedWidget *frameStack;
+    int size;
+    QColor backgroundColor;
+    QString fileName;
+    std::vector<DrawingTool> tools;
+    int currentToolIndex;
+
+    /**
+     * @brief updateFrameProperties updates the frames colorPen to match the current tool
+     */
+    void updateFrameProperties();
+
+    /**
+     * @brief updateSliders - Updates the color sliders to have the same rgb values as the current tool
+     */
+    void updateSliders();
+
+    /**
+     * @brief getBackgroundColorOfCurrentFrame - the eraser tool is constatntly locked on the background color.
+     * This helper method gets the background color of the current frame.
+     * @return The background color
+     */
+    QColor getBackgroundColorOfCurrentFrame();
+
 public:
     /**
      * @brief FrameModel - Holds frames in QStackWidget and manipulates this strucutre accoridng to instructions from UI interactions
@@ -27,9 +52,9 @@ public:
     void attachStackWidget(QStackedWidget *frameStackWidget);
 
     /**
-     * @brief add_image - Creates new frame and pushes to the stack. Used upon startup, and by 'add' slots
+     * @brief addImage - Creates new frame and pushes to the stack. Used upon startup, and by 'add' slots
      */
-    void add_image();
+    void addImage();
 
     /**
      * @brief toolChanged - Gets a new tool when the list changes tools
@@ -144,30 +169,5 @@ signals:
      * @param value - The new size
      */
     void updateBrushSize(int value);
-
-private:
-    QStackedWidget *frameStack;
-    int size;
-    QColor backgroundColor;
-    QString fileName;
-    std::vector<DrawingTool> tools;
-    int currentToolIndex;
-
-    /**
-     * @brief updateFrameProperties updates the frames colorPen to match the current tool
-     */
-    void updateFrameProperties();
-
-    /**
-     * @brief updateSliders - Updates the color sliders to have the same rgb values as the current tool
-     */
-    void updateSliders();
-
-    /**
-     * @brief getBackgroundColorOfCurrentFrame - the eraser tool is constatntly locked on the background color.
-     * This helper method gets the background color of the current frame.
-     * @return The background color
-     */
-    QColor getBackgroundColorOfCurrentFrame();
 };
 #endif // FRAMEMODEL_H
