@@ -1,3 +1,9 @@
+/*
+ * Alan Mo u1022249
+ * CS 3505
+ * A8: Sprite Editor Implementation
+ */
+
 #ifndef FRAMEPREVIEW_H
 #define FRAMEPREVIEW_H
 
