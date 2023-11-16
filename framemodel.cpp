@@ -105,6 +105,7 @@ void FrameModel::backgroundColorChanged(QString color)
 
 void FrameModel::saveFile()
 {
+    // Save the file name
     if (fileName.isEmpty())
     {
         fileName = QFileDialog::getSaveFileName(new QWidget, tr("Open File"), "/path/to/file/", tr("JSON Files (*.ssp)"));
@@ -113,16 +114,21 @@ void FrameModel::saveFile()
     QJsonObject content;
     content.insert("Image Size", size);
     QString str;
+
+    // Insert every frame into json content
     for (int f = 0; f < frameStack->count(); f++)
     {
         QJsonObject frame;
         int index = 1;
+        // Insert every pixel into frame object
         for (int y = 0; y < dynamic_cast<Frame *>(frameStack->widget(f))->getImage().height(); y++)
         {
             for (int x = 0; x < dynamic_cast<Frame *>(frameStack->widget(f))->getImage().width(); x++)
             {
                 QJsonObject pixel;
                 QColor currentColor(dynamic_cast<Frame *>(frameStack->widget(f))->getImage().pixelColor(x, y));
+
+                // Insert every pixel element into pixel object
                 pixel.insert("a", currentColor.alpha());
                 pixel.insert("b", currentColor.blue());
                 pixel.insert("g", currentColor.green());
@@ -135,6 +141,8 @@ void FrameModel::saveFile()
         }
         content.insert("Frame " + str.setNum(f + 1), frame);
     }
+
+    // Create json document and write to it
     QJsonDocument document(content);
     QFile file(fileName);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
@@ -162,10 +170,13 @@ void FrameModel::openFile()
     {
         QByteArray valuesArray = file.readAll();
         file.close();
+
         QJsonDocument valuesDocument(QJsonDocument::fromJson(valuesArray));
         QJsonObject json = valuesDocument.object();
+
         QString imageSizeKey("Image Size");
         emit setSize(str.setNum(json.value(imageSizeKey).toInt()));
+
         int biggestIndex = 0;
         foreach (const QString &jsonObject, json.keys())
         {
@@ -173,10 +184,12 @@ void FrameModel::openFile()
             {
                 QString stringIndex = jsonObject.mid(6, 7);
                 int index = stringIndex.toInt();
+                // Add frames so index doesn't go out of bounds
                 while (index > frameStack->count())
                 {
                     addImage();
                 }
+
                 QJsonObject frame = json.value(jsonObject).toObject();
                 foreach (const QString &pixelKey, frame.keys())
                 {
@@ -186,6 +199,7 @@ void FrameModel::openFile()
                     {
                         pixelValues.push_back(str.setNum(pixel.value(pixelValue).toInt()));
                     }
+                    // Set pixel values
                     int x = pixelValues[4].toInt();
                     int y = pixelValues[5].toInt();
                     int red = pixelValues[3].toInt();
@@ -198,6 +212,7 @@ void FrameModel::openFile()
                 biggestIndex++;
             }
         }
+        // Remove excessive frames
         while (biggestIndex < frameStack->count())
         {
             frameStack->removeWidget(frameStack->widget(frameStack->count() - 1));
